@@ -23,8 +23,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.login_account_icon_qiv)
-    QMUIRadiusImageView loginAccountIconQiv;
+    //    @BindView(R.id.login_account_icon_qiv)
+//    QMUIRadiusImageView loginAccountIconQiv;
     @BindView(R.id.login_account_phone)
     EditText loginAccountPhone;
     @BindView(R.id.login_account_psw)
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.login_account_icon_qiv, R.id.login_account_commit_tv, R.id.login_forget_psw_tv, R.id.login_to_register_tv})
+    @OnClick({R.id.login_account_commit_tv, R.id.login_forget_psw_tv, R.id.login_to_register_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_account_commit_tv:
@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        //todo login
 
     }
 

@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.login.activity;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
@@ -96,9 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
                     map.put("phone", mAccountPhone.getText().toString());
                     map.put("type", LoginApi.REGISTER);
                     RequestBody body = JsonUtils.createJsonRequestBody(map);
-//                    JSONObject jsonObj = new JSONObject(map);
-//                    RequestBody body = RequestBody.create(MediaType.parse("Content-Type,application/json"), jsonObj.toString());
-
                     Call<BaseResponseEntity> call = loginApi.getSms(body);
                     call.enqueue(smsCallBack);
                 } else {
@@ -189,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initTopBar() {
-        mTopbar.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_panel_bg));
+        mTopbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
         QMUIAlphaImageButton backBtn = mTopbar.addLeftBackImageButton();
         backBtn.setImageResource(R.drawable.topbar_back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +197,9 @@ public class RegisterActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_still, R.anim.slide_out_right);
             }
         });
-        mTopbar.setTitle(getString(R.string.title_register));
+        TextView title = mTopbar.setTitle(getString(R.string.title_register));
+        title.setTextColor(Color.WHITE);
+
     }
 
     class MyCountDownTimer extends CountDownTimer {

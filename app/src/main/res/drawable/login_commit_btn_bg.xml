@@ -3,7 +3,7 @@
 
     <item android:drawable="@drawable/login_commit_btn_on" android:state_pressed="true" />
     <item android:drawable="@drawable/login_commit_btn_on" android:state_focused="true" />
-    <item android:drawable="@drawable/login_commit_btn_on" android:state_enabled="false" />
+    <item android:drawable="@drawable/login_commit_btn_noable" android:state_enabled="false" />
     <item android:drawable="@drawable/login_commit_btn" />
 
 </selector>

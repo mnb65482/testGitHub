@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.login.activity;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
@@ -84,7 +85,7 @@ public class ForgetPSWActivity extends AppCompatActivity {
     }
 
     private void initTopBar() {
-        mTopbar.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_panel_bg));
+        mTopbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
         QMUIAlphaImageButton backBtn = mTopbar.addLeftBackImageButton();
         backBtn.setImageResource(R.drawable.topbar_back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +95,8 @@ public class ForgetPSWActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_still, R.anim.slide_out_right);
             }
         });
-        mTopbar.setTitle(getString(R.string.title_reset));
+        TextView title = mTopbar.setTitle(getString(R.string.title_reset));
+        title.setTextColor(Color.WHITE);
     }
 
     @OnClick({R.id.reset_getsms_tv, R.id.reset_account_commit_tv})

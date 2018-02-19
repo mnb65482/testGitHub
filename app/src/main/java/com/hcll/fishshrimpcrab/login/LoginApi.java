@@ -1,14 +1,19 @@
 package com.hcll.fishshrimpcrab.login;
 
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
+import com.hcll.fishshrimpcrab.common.http.entity.FileUploadEntity;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 /**
  * Created by hong on 2018/2/10.
@@ -32,5 +37,11 @@ public interface LoginApi {
     @Headers("Content-Type:application/json")
     @POST("user/modify-pw")
     Call<BaseResponseEntity> resetPsw(@Body RequestBody body);
+
+    @Multipart
+    @POST("upload/head")
+    Call<BaseResponseEntity<FileUploadEntity>> saveFile(@Part MultipartBody.Part file,
+                                                        @Query("user_id") String user_id);
+
 
 }
