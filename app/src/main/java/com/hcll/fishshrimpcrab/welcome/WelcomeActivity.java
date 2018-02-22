@@ -1,9 +1,11 @@
 package com.hcll.fishshrimpcrab.welcome;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.hcll.fishshrimpcrab.R;
@@ -31,23 +33,18 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         QMUIStatusBarHelper.translucent(this);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
         createSettingDialog();
         createSuccessDialog();
-
-        boolean isFirstLogin = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_LOGIN, true);
-
-
         if (!NotificationUtils.isNotificationEnabled(this)) {
             settingDialog.show();
         } else {
-            if (!isFirstLogin) {
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-            }
+            startActivity(new Intent(this, GuidePageActivity.class));
+            finish();
         }
     }
 
@@ -64,7 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private void createSettingDialog() {
         QMUIDialog.MessageDialogBuilder builder = new QMUIDialog.MessageDialogBuilder(this)
                 .setTitle("物2斗想给您发送通知")
-                .setMessage("通知可能包括提、声音和图标标 记，这些可在设置中开启。")
+                .setMessage("通知可能包括提示、声音和图标，这些可在设置中开启。")
                 .addAction("马上去设置", new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
@@ -73,6 +70,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 });
         settingDialog = builder.create();
         settingDialog.setCanceledOnTouchOutside(false);
+        settingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                WelcomeActivity.this.finish();
+            }
+        });
     }
 
     private void createSuccessDialog() {
@@ -90,6 +93,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 });
         successDialog = builder.create();
         successDialog.setCanceledOnTouchOutside(false);
+        successDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                WelcomeActivity.this.finish();
+            }
+        });
     }
 
     @Override

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_transparent_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#62000000"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.hcll.fishshrimpcrab.login.activity.ImageSelectActivity">
+
+    <TextView
+        android:id="@+id/transparent_cancel_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/transparent_btn_rounded"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/cancel"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/transparent_second_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/transparent_cancel_tv"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/transparent_btn_bottom_rounded"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="12sp"
+        tools:text="@string/select_system_image" />
+
+    <TextView
+        android:id="@+id/transparent_first_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/transparent_second_tv"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/transparent_btn_top_rounded"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="12sp"
+        tools:text="@string/take_photo" />
+
+
+</RelativeLayout>

@@ -41,4 +41,13 @@
     <string name="select_system_image">从系统相册选择</string>
     <string name="take_photo">拍照</string>
     <string name="upload_image">上传图片</string>
+
+    <!--编辑用户信息-->
+    <string name="perfect_info_repeat">昵称重复</string>
+    <string name="perfect_info_nouser">暂无该用户</string>
+    <string name="perfect_info_nodiomand">钻石不足</string>
+    <string name="perfect_info_faiure">更新失败</string>
+    <string name="perfect_info_illegal">包含非法字符</string>
+
+
 </resources>

@@ -78,12 +78,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void commit() {
         if (StringUtils.isEmpty(loginAccountPhone.getText())) {
-            ToastUtils.showShort("请填写手机号！");
+            ToastUtils.showShort(getString(R.string.input_phonenum));
             return;
         }
 
         if (StringUtils.isEmpty(loginAccountPsw.getText())) {
-            ToastUtils.showShort("请填写密码！");
+            ToastUtils.showShort(getString(R.string.input_psw));
             return;
         }
 

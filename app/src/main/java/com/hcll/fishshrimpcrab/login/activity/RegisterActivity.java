@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.login.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,34 +16,33 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.JsonObject;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
 import com.hcll.fishshrimpcrab.login.LoginApi;
+import com.hcll.fishshrimpcrab.login.entity.UserInfoEntity;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hcll.fishshrimpcrab.login.activity.PerfectInfoActivity.EXTRA_USER_ID;
+
 public class RegisterActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE_PERFECT = 112;
 
     @BindView(R.id.register_topbar)
     QMUITopBar mTopbar;
@@ -123,18 +123,23 @@ public class RegisterActivity extends AppCompatActivity {
         map.put("invate_code", mInviteCodeEt.getText().toString());
         RequestBody body = JsonUtils.createJsonRequestBody(map);
 
-        Call<BaseResponseEntity> call = loginApi.register(body);
-        call.enqueue(new Callback<BaseResponseEntity>() {
+        Call<BaseResponseEntity<UserInfoEntity>> call = loginApi.register(body);
+        call.enqueue(new Callback<BaseResponseEntity<UserInfoEntity>>() {
             @Override
-            public void onResponse(Call<BaseResponseEntity> call, Response<BaseResponseEntity> response) {
+            public void onResponse(Call<BaseResponseEntity<UserInfoEntity>> call, Response<BaseResponseEntity<UserInfoEntity>> response) {
                 dialog.dismiss();
                 BaseResponseEntity entity = response.body();
                 if (entity != null) {
                     switch (entity.getStatus()) {
                         //注册成功
                         case 0:
-                            //todo 跳转到用户信息
-//                            ToastUtils.showLong(R.string.sms_success);
+                            Object data = entity.getData();
+                            if (data instanceof UserInfoEntity) {
+                                UserInfoEntity userinfo = (UserInfoEntity) data;
+                                Intent intent = PerfectInfoActivity.createActivity(RegisterActivity.this, userinfo.getUserid());
+                                startActivityForResult(intent, REQUEST_CODE_PERFECT);
+                            }
+
                             break;
                         //失败
                         case 1:
@@ -153,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BaseResponseEntity> call, Throwable t) {
+            public void onFailure(Call<BaseResponseEntity<UserInfoEntity>> call, Throwable t) {
                 ToastUtils.showLong(R.string.register_failuer);
                 dialog.dismiss();
             }
@@ -178,10 +183,10 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
-        if (StringUtils.isEmpty(mInviteCodeEt.getText())) {
-            ToastUtils.showShort(getString(R.string.input_inviteCode));
-            return false;
-        }
+//        if (StringUtils.isEmpty(mInviteCodeEt.getText())) {
+//            ToastUtils.showShort(getString(R.string.input_inviteCode));
+//            return false;
+//        }
 
         return true;
     }
@@ -249,4 +254,16 @@ public class RegisterActivity extends AppCompatActivity {
             ToastUtils.showShort(getString(R.string.getsms_failuer));
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_CODE_PERFECT) {
+            setResult(RESULT_OK);
+            finish();
+        }
+
+    }
 }

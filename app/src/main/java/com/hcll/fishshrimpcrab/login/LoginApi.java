@@ -2,6 +2,7 @@ package com.hcll.fishshrimpcrab.login;
 
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.http.entity.FileUploadEntity;
+import com.hcll.fishshrimpcrab.login.entity.UserInfoEntity;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -28,7 +29,7 @@ public interface LoginApi {
 
     @Headers("Content-Type:application/json")
     @POST("user/register")
-    Call<BaseResponseEntity> register(@Body RequestBody body);
+    Call<BaseResponseEntity<UserInfoEntity>> register(@Body RequestBody body);
 
     @Headers("Content-Type:application/json")
     @POST("user/register-code")
@@ -38,10 +39,15 @@ public interface LoginApi {
     @POST("user/modify-pw")
     Call<BaseResponseEntity> resetPsw(@Body RequestBody body);
 
+    @Headers("Content-Type:application/json")
+    @POST("customer/update")
+    Call<BaseResponseEntity> updateUser(@Body RequestBody body);
+
+
     @Multipart
     @POST("upload/head")
     Call<BaseResponseEntity<FileUploadEntity>> saveFile(@Part MultipartBody.Part file,
-                                                        @Query("user_id") String user_id);
+                                                        @Query("user_id") int user_id);
 
 
 }

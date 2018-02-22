@@ -32,6 +32,12 @@ public class GuidePageActivity extends AppCompatActivity {
         QMUIStatusBarHelper.translucent(this);
         setContentView(R.layout.activity_guide_page);
 
+        boolean isFirstLogin = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_LOGIN, true);
+        if (!isFirstLogin) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+
         initFragmentList();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.guide_page_viewpager);
