@@ -8,14 +8,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.hcll.fishshrimpcrab.main.MainActivity;
 import com.hcll.fishshrimpcrab.R;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,10 +88,18 @@ public class LoginActivity extends AppCompatActivity {
 
         //todo login
 
+        Intent intent = MainActivity.createActivit(this, 0);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_CODE_2_REGISTER) {
+            finish();
+        }
     }
 }

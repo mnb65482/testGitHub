@@ -49,5 +49,16 @@
     <string name="perfect_info_faiure">更新失败</string>
     <string name="perfect_info_illegal">包含非法字符</string>
 
+    <!--底部tab名称-->
+    <string name="tab1">牌局</string>
+    <string name="tab2">俱乐部</string>
+    <string name="tab3">战绩</string>
+    <string name="tab4">我的</string>
+    <string name="tab_main">首页</string>
+
+    <!--俱乐部-->
+    <string name="club_empty_text1">你还没有加入俱乐部哦~</string>
+    <string name="club_empty_text2">自己创建或者加入一个吧！</string>
+
 
 </resources>

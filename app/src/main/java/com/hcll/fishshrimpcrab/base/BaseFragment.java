@@ -1,55 +1,87 @@
 package com.hcll.fishshrimpcrab.base;
 
-import com.hcll.fishshrimpcrab.R;
-import com.qmuiteam.qmui.arch.QMUIFragment;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.util.QMUIPackageHelper;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
-import static java.security.AccessController.getContext;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+
+import com.hcll.fishshrimpcrab.R;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 
 /**
  * Created by cgspine on 2018/1/7.
  */
 
-public abstract class BaseFragment extends QMUIFragment {
+public abstract class BaseFragment extends Fragment {
 
+    private View topbarLayout;
+    private QMUITopBar topBar;
+    private View contentView;
 
-    public BaseFragment() {
-    }
-
+    @Nullable
     @Override
-    protected int backViewInitOffset() {
-        return QMUIDisplayHelper.dp2px(getContext(), 100);
+    final public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View parent = LayoutInflater.from(getContext()).inflate(R.layout.activity_base, container, false);
+        topbarLayout = parent.findViewById(R.id.base_topbar_layout);
+        topBar = (QMUITopBar) parent.findViewById(R.id.base_topbar);
+        ViewGroup group = (ViewGroup) parent.findViewById(R.id.container_body);
+
+        contentView = inflater.inflate(getContentView(), null);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        group.addView(contentView, lp);
+
+        onInitView();
+
+        return parent;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkAndShowUpgradeTip();
+    /**
+     * 标准流程-初始化
+     */
+    public abstract void onInitView();
 
+    public abstract int getContentView();
+
+
+    public final View findViewById(int id) {
+        return contentView.findViewById(id);
     }
 
-    private void checkAndShowUpgradeTip() {
-
-//        QDPreferenceManager preferenceManager = QDPreferenceManager.getInstance(getContext());
-//        if (preferenceManager.isNeedShowUpgradeTip()) {
-//            preferenceManager.setNeedShowUpgradeTip(false);
-//            String title = String.format(getString(R.string.app_upgrade_tip_title), QMUIPackageHelper.getAppVersion(getContext()));
-//            String message = "1. 分离出 arch 模块，用于 fragment 管理，支持手势返回\n" +
-//                    "2. 整理 QMUITopbar 的 theme，能够对 QMUITopbar 做更多的差异化处理\n" +
-//                    "3. 其它 bugfix: #125、#127、#132、#141";
-//            new QMUIDialog.MessageDialogBuilder(getContext())
-//                    .setTitle(title)
-//                    .setMessage(message)
-//                    .addAction(R.string.ok, new QMUIDialogAction.ActionListener() {
-//                        @Override
-//                        public void onClick(QMUIDialog qmuiDialog, int i) {
-//                            qmuiDialog.dismiss();
-//                        }
-//                    })
-//                    .show();
-//        }
+    protected void hideTopBar() {
+        topbarLayout.setVisibility(View.GONE);
     }
+
+    protected void showTopBar() {
+        topbarLayout.setVisibility(View.VISIBLE);
+    }
+
+    protected QMUITopBar getTopBar() {
+        return topBar;
+    }
+
+    /**
+     * 隐藏软键盘
+     *
+     * @return void [返回类型说明]
+     * @throws throws [违例类型] [违例说明]
+     * @see [类、类#方法、类#成员]
+     */
+    protected void hideKeyboard(IBinder binder) {
+        if (binder == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) this.getActivity().getSystemService(
+                this.getActivity().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binder, 0);
+    }
+
+
 }

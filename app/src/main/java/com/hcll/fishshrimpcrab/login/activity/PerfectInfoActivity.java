@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.hcll.fishshrimpcrab.main.MainActivity;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
@@ -22,7 +23,6 @@ import com.hcll.fishshrimpcrab.common.http.entity.FileUploadEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
 import com.hcll.fishshrimpcrab.login.LoginApi;
-import com.hcll.fishshrimpcrab.login.entity.UserInfoEntity;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -40,9 +40,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.R.attr.path;
-import static com.hcll.fishshrimpcrab.login.activity.RegisterActivity.REQUEST_CODE_PERFECT;
 
 public class PerfectInfoActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_CAMERA = 103;
@@ -176,13 +173,10 @@ public class PerfectInfoActivity extends AppCompatActivity {
                 switch (entity.getStatus()) {
                     //更新信息成功
                     case 0:
-//                        Object data = entity.getData();
-//                        if (data instanceof UserInfoEntity) {
-//                            UserInfoEntity userinfo = (UserInfoEntity) data;
-//                            Intent intent = PerfectInfoActivity.createActivity(RegisterActivity.this, userinfo.getUserid());
-//                            startActivityForResult(intent, REQUEST_CODE_PERFECT);
-//                        }
-
+                        Intent intent = MainActivity.createActivit(PerfectInfoActivity.this, userId);
+                        startActivity(intent);
+                        setResult(RESULT_OK);
+                        finish();
                         break;
                     //昵称重复
                     case 1:

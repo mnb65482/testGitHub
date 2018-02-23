@@ -14,6 +14,7 @@ import com.hcll.fishshrimpcrab.common.utils.IntentUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
+import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.LubanOptions;
 import com.jph.takephoto.model.TContextWrap;
@@ -36,6 +37,7 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
     public static final String EXTRA_CAMERA = "imagePath";
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
+    private String caropCacheFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
         super.onCreate(savedInstanceState);
         configCompress(getTakePhoto());
         configTakePhotoOption(getTakePhoto());
+
     }
 
     @Override
@@ -65,17 +68,16 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
     protected void firstBtnClick() {
         File file = new File(FileUtils.createCaptureFilePath());
         Uri imageUri = Uri.fromFile(file);
-//        configCompress(getTakePhoto());
-//        configTakePhotoOption(getTakePhoto());
-        getTakePhoto().onPickFromCapture(imageUri);
+
+        getTakePhoto().onPickFromCaptureWithCrop(imageUri, getCropOptions());
     }
 
     @Override
     protected void secondBtnClick() {
-//        configCompress(getTakePhoto());
-//        configTakePhotoOption(getTakePhoto());
-        getTakePhoto().onPickFromDocuments();
-
+        caropCacheFilePath = FileUtils.createCaptureFilePath();
+        File file = new File(caropCacheFilePath);
+        Uri imageUri = Uri.fromFile(file);
+        getTakePhoto().onPickFromDocumentsWithCrop(imageUri, getCropOptions());
     }
 
     @Override
@@ -109,6 +111,12 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
 
         Log.w(TAG, "takeSuccess: OriginalPath = " + result.getImage().getOriginalPath());
         Log.w(TAG, "takeSuccess: CompressPath = " + result.getImage().getCompressPath());
+
+        File file = new File(caropCacheFilePath);
+        if (file.exists()) {
+            FileUtils.deleteFile(file);
+        }
+
         Intent intent = new Intent();
         intent.putExtra(EXTRA_CAMERA, result.getImage().getCompressPath());
         setResult(RESULT_OK, intent);
@@ -151,7 +159,18 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
                 .enableReserveRaw(false)//压缩后是否保存原图
                 .create();
         takePhoto.onEnableCompress(config, false);//压缩时是否显示进度条
+    }
 
+    private CropOptions getCropOptions() {
+        int height = 800;
+        int width = 800;
 
+        CropOptions.Builder builder = new CropOptions.Builder();
+
+        builder.setAspectX(width).setAspectY(height);
+//            builder.setOutputX(width).setOutputY(height);
+        //是否使用自带的图片裁剪工具
+        builder.setWithOwnCrop(true);
+        return builder.create();
     }
 }

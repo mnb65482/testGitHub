@@ -84,12 +84,12 @@
                 android:textSize="12sp" />
 
             <CheckBox
-                android:padding="8dp"
                 android:id="@+id/login_psw_visibility_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/login_fill_bg"
-                android:button="@drawable/common_psw_visibility_bg"/>
+                android:button="@drawable/common_psw_visibility_bg"
+                android:padding="8dp" />
 
         </LinearLayout>
 
@@ -126,13 +126,13 @@
 
         <TextView
             android:id="@+id/login_account_commit_tv"
-            android:text="@string/login_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/login_commit_btn_bg"
             android:gravity="center"
             android:padding="8dp"
+            android:text="@string/login_text"
             android:textColor="@color/qmui_config_color_60_pure_black"
             android:textSize="12sp" />
 

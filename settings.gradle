@@ -1,2 +1,2 @@
 //include ':app',':circleindicator'
-include ':app'
+include ':app', ':tabBar_library'
