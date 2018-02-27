@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
+import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
@@ -37,8 +38,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.hcll.fishshrimpcrab.login.activity.PerfectInfoActivity.EXTRA_USER_ID;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -136,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Object data = entity.getData();
                             if (data instanceof UserInfoEntity) {
                                 UserInfoEntity userinfo = (UserInfoEntity) data;
+                                AppCommonInfo.userid = userinfo.getUserid();
                                 Intent intent = PerfectInfoActivity.createActivity(RegisterActivity.this, userinfo.getUserid());
                                 startActivityForResult(intent, REQUEST_CODE_PERFECT);
                             }

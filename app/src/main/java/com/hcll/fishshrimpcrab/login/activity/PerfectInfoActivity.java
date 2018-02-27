@@ -73,7 +73,6 @@ public class PerfectInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initTopBar();
         userId = getIntent().getIntExtra(EXTRA_USER_ID, 0);
-
         retrofit = HttpUtils.createRetrofit(this, LoginApi.class);
         dialog = DialogUtils.createProgressDialog(this, null);
 

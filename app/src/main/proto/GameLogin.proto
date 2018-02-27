@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package LoginProto;
+
+enum LoginCmd {
+    NULL             = 0;
+    LOGIN            = 666;  // 登录
+    RES              = 888;  // Res登录
+    RES_HEARTBEAT    = 999;  // Res心跳包
+    RES_LOGOUT       = 777;  // Res踢出登录
+    RES_OFFLINE      = 555;  // Res主动退出登录
+}
+
+message LoginHead {
+    int32 err_code = 1;   //0 成功    其他则为错误码
+    LoginCmd cmd_id = 2;
+}
+
+message LoginBody {
+    google.protobuf.Any body = 1;
+}
+
+message LoginMsg {
+    LoginHead head = 1;
+    LoginBody body = 2;
+}
+
+// 登录请求
+message LoginReq {
+    string phoneNum = 1;
+    string password = 2;
+    string imsi = 3;
+    int32 deviceType = 4;//设备1 ios   2 安卓
+    int32 userType = 5;//登录类型:1是用户名密码 2是token模式
+    string token = 6;//自动登录用的token
+}
+
+// 登录回包
+message LoginResponse {
+    int32 userId = 1;
+    string token = 2;
+    string ip = 3;
+    string port = 4;
+    string key = 5;//用于登录res
+}
+
+// 登录Res请求
+message LoginResReq {
+    string key = 1;
+    int32 userId = 2;
+}
+
+// 登录Res回包
+message LoginResResponse {
+    int32 gender = 1;   //0 男   1 女
+    string nick = 2;
+    string portrait = 3;
+    int32 diamonds = 4;
+}
+
+// Res心跳包
+message ResHeartBeatReq {
+    int32 userId = 1;
+}
+
+// Res心跳包回包
+message ResHeartBeatResponse {
+
+}
+
+// Res踢出登录（在其他地方登录等情况）
+message ResLogoutOrder {
+    int32 status = 1;//1 主动退出   2 被踢出
+}
+
+// Res主动退出登录
+message ResOfflineReq {
+    int32 userId = 1;
+}

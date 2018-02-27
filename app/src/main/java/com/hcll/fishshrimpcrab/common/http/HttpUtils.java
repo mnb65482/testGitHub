@@ -1,25 +1,17 @@
 package com.hcll.fishshrimpcrab.common.http;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.common.http.interceptor.HttpLoggingInterceptor;
 import com.hcll.fishshrimpcrab.common.http.ssl.HostNameVerifier;
 import com.hcll.fishshrimpcrab.common.http.ssl.HttpSSLContext;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -53,8 +45,8 @@ public class HttpUtils {
         return createRetrofit(context, BaseUrl, service);
     }
 
-    public static <T> T createRetrofit(Context context, final Class<T> service, String projectCode, String token) {
-        return createRetrofit(context, BaseUrl, service, projectCode, token);
+    public static <T> T createRetrofit(Context context, final Class<T> service, String token) {
+        return createRetrofit(context, BaseUrl, service, token);
     }
 
     /**
@@ -76,10 +68,10 @@ public class HttpUtils {
         return retrofit.create(service);
     }
 
-    public static <T> T createRetrofit(Context context, String baseUrl, final Class<T> service, String projectCode, String token) {
+    public static <T> T createRetrofit(Context context, String baseUrl, final Class<T> service, String token) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(HttpUtils.createProjectClientBuilder(context, projectCode, token).build())
+                .client(HttpUtils.createProjectClientBuilder(context, token).build())
                 // .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -94,13 +86,19 @@ public class HttpUtils {
      * @return
      */
     public static OkHttpClient.Builder createProjectClientBuilder(Context context) {
-        return createClientBuilder(context, 0, false, "");
-    }
-
-    public static OkHttpClient.Builder createProjectClientBuilder(Context context, String projectCode, String token) {
+//        return createClientBuilder(context, 0, false, "");
         OkHttpClient.Builder clientBuilder = createClientBuilder(context, 0, false, "");
         HttpRequestHeaderInterceptor headerInterceptor = new HttpRequestHeaderInterceptor();
-        headerInterceptor.addHeader("md5at", projectCode);
+        headerInterceptor.addHeader("md5at", AppCommonInfo.token);
+        headerInterceptor.addHeader("did", DeviceUtils.getAndroidID());
+        clientBuilder.interceptors().add(0, headerInterceptor);
+        return clientBuilder;
+    }
+
+    public static OkHttpClient.Builder createProjectClientBuilder(Context context, String token) {
+        OkHttpClient.Builder clientBuilder = createClientBuilder(context, 0, false, "");
+        HttpRequestHeaderInterceptor headerInterceptor = new HttpRequestHeaderInterceptor();
+        headerInterceptor.addHeader("md5at", token);
         headerInterceptor.addHeader("did", token);
         clientBuilder.interceptors().add(0, headerInterceptor);
         return clientBuilder;

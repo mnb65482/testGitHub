@@ -80,6 +80,7 @@ public class MainActivity extends BaseAtivity implements OnTabSelectListener {
         list.add(mainFragment);
 
         mainTabbar.setTabListener(this);
+        mainViewPager.setOffscreenPageLimit(4);
         mainViewPager.setAdapter(new MainFragAdapter(getSupportFragmentManager(), list));
 
         mainTabbar.setContainer(mainViewPager);

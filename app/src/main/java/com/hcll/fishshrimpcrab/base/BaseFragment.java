@@ -26,7 +26,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    final public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View parent = LayoutInflater.from(getContext()).inflate(R.layout.activity_base, container, false);
         topbarLayout = parent.findViewById(R.id.base_topbar_layout);
@@ -66,6 +66,11 @@ public abstract class BaseFragment extends Fragment {
     protected QMUITopBar getTopBar() {
         return topBar;
     }
+
+    protected View getFragView() {
+        return contentView;
+    }
+
 
     /**
      * 隐藏软键盘

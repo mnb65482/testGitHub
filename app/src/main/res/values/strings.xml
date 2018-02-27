@@ -59,6 +59,10 @@
     <!--俱乐部-->
     <string name="club_empty_text1">你还没有加入俱乐部哦~</string>
     <string name="club_empty_text2">自己创建或者加入一个吧！</string>
+    <string name="my_club">我的俱乐部</string>
+    <string name="join_club">加入的俱乐部</string>
+    <string name="create_to_club">创建俱乐部</string>
+    <string name="join_to_club">加入俱乐部</string>
 
 
 </resources>

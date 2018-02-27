@@ -1,22 +1,19 @@
 package com.hcll.fishshrimpcrab.login.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.hcll.fishshrimpcrab.R;
+import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.common.utils.FileUtils;
-import com.hcll.fishshrimpcrab.common.utils.IntentUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.LubanOptions;
 import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
@@ -25,8 +22,6 @@ import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
-
-import static android.R.attr.width;
 
 
 public class ImageSelectActivity extends BaseTransparentActivity implements TakePhoto.TakeResultListener, InvokeListener {
@@ -112,10 +107,13 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
         Log.w(TAG, "takeSuccess: OriginalPath = " + result.getImage().getOriginalPath());
         Log.w(TAG, "takeSuccess: CompressPath = " + result.getImage().getCompressPath());
 
-        File file = new File(caropCacheFilePath);
-        if (file.exists()) {
-            FileUtils.deleteFile(file);
+        if (!StringUtils.isEmpty(caropCacheFilePath)) {
+            File file = new File(caropCacheFilePath);
+            if (file.exists()) {
+                FileUtils.deleteFile(file);
+            }
         }
+
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_CAMERA, result.getImage().getCompressPath());
@@ -154,20 +152,18 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
 
     private void configCompress(TakePhoto takePhoto) {
         CompressConfig config = new CompressConfig.Builder()
-                .setMaxSize(102400)
-                .setMaxPixel(800)
+                .setMaxSize(AppCommonInfo.maxSize)
+                .setMaxPixel(AppCommonInfo.maxPixel)
                 .enableReserveRaw(false)//压缩后是否保存原图
                 .create();
         takePhoto.onEnableCompress(config, false);//压缩时是否显示进度条
     }
 
     private CropOptions getCropOptions() {
-        int height = 800;
-        int width = 800;
 
         CropOptions.Builder builder = new CropOptions.Builder();
 
-        builder.setAspectX(width).setAspectY(height);
+        builder.setAspectX(AppCommonInfo.maxPixel).setAspectY(AppCommonInfo.maxPixel);
 //            builder.setOutputX(width).setOutputY(height);
         //是否使用自带的图片裁剪工具
         builder.setWithOwnCrop(true);
