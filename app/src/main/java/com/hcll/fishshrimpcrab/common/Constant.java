@@ -14,7 +14,4 @@ public class Constant {
 
     public static final String IMEI = PhoneUtils.getIMEI();
 
-    public static final String socket_host = "www.wu2dou.com";
-    public static final int socket_port = 8500;
-
 }

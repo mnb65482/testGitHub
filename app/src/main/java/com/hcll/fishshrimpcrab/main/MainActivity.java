@@ -1,11 +1,13 @@
 package com.hcll.fishshrimpcrab.main;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.Record.fragment.MainRecordFragment;
@@ -29,7 +31,13 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseAtivity implements OnTabSelectListener {
 
+    public final static String BROADCAST_ACTION_RESREQ_RESULT = "wu2dou.braodcast.action.resreq.result";
+
     public static final String EXTRA_USER_ID = "user_id";
+    public static final String EXTRA_GENDER = "gender";
+    public static final String EXTRA_NICK = "nick";
+    public static final String EXTRA_PORTRAIT = "portrait";
+    public static final String EXTRA_DIAMONDS = "diamonds";
 
     @Titles
     private static final int[] mTitles = {R.string.tab1, R.string.tab2, R.string.tab3, R.string.tab4};
@@ -50,6 +58,12 @@ public class MainActivity extends BaseAtivity implements OnTabSelectListener {
     private List<Fragment> list = new ArrayList<>();
     private int userId;
 
+    /**
+     * 本地广播管理
+     */
+    private LocalBroadcastManager mLocalBroadcastManager;
+    private ResReqBroadcastReceiver broadcastReceiverRes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +72,10 @@ public class MainActivity extends BaseAtivity implements OnTabSelectListener {
         initParam();
         initView();
 
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+        broadcastReceiverRes = new ResReqBroadcastReceiver();
+        mLocalBroadcastManager.registerReceiver(broadcastReceiverRes, new IntentFilter(BROADCAST_ACTION_RESREQ_RESULT));
     }
 
 
@@ -104,6 +122,15 @@ public class MainActivity extends BaseAtivity implements OnTabSelectListener {
         return intent;
     }
 
+    public static Intent createLoginResReceiver(int gender, String nick, String portrait, int diamonds) {
+        Intent intent = new Intent(BROADCAST_ACTION_RESREQ_RESULT);
+        intent.putExtra(EXTRA_GENDER, gender);
+        intent.putExtra(EXTRA_NICK, nick);
+        intent.putExtra(EXTRA_PORTRAIT, portrait);
+        intent.putExtra(EXTRA_DIAMONDS, diamonds);
+        return intent;
+    }
+
     @Override
     public void onTabSelect(int index) {
 
@@ -112,4 +139,22 @@ public class MainActivity extends BaseAtivity implements OnTabSelectListener {
     public JPTabBar getTabbar() {
         return mainTabbar;
     }
+
+
+    @Override
+    protected void onDestroy() {
+        mLocalBroadcastManager.unregisterReceiver(broadcastReceiverRes);
+        super.onDestroy();
+    }
+
+    /**
+     * 发送消息的广播接收器
+     */
+    private class ResReqBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    }
+
 }

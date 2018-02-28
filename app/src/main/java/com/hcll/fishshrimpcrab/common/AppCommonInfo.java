@@ -29,16 +29,26 @@ public class AppCommonInfo {
     /**
      * 图片下载路径
      */
-    public static String ImageDownLoadPath = "http://static.wu2dou.com:8600/wudoufile/";
+    public static String ImageDownLoadPath = "http://static.wu2dou.com:8600/wudoufile/img/";
+
+    /**
+     * 登录host
+     */
+    public static final String socket_host = "www.wu2dou.com";
+
+    /**
+     * 登录port
+     */
+    public static final int socket_port = 8500;
 
     /**
      * 心跳包间隔时间
      */
-    public static int heartTime = 10;
+    public static int heartTime = 10 * 1000;
 
     /**
      * 自动重连等待时间
      */
-    public static int reconnectTime = 30;
+    public static int reconnectTime = 20;
 
 }
