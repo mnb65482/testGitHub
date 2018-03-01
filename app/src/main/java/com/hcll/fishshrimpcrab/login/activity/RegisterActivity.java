@@ -23,6 +23,7 @@ import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
 import com.hcll.fishshrimpcrab.login.LoginApi;
+import com.hcll.fishshrimpcrab.login.MD5Utils;
 import com.hcll.fishshrimpcrab.login.entity.UserInfoEntity;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -38,6 +39,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.blankj.utilcode.util.LogUtils.A;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -118,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         Map<String, Object> map = new HashMap<>();
         map.put("phone", mAccountPhone.getText().toString());
         map.put("code", mSmsPsw.getText().toString());
-        map.put("passwd", mAccountPsw.getText().toString());
+        map.put("passwd", MD5Utils.getMD5(mAccountPsw.getText().toString()));
         map.put("invate_code", mInviteCodeEt.getText().toString());
         RequestBody body = JsonUtils.createJsonRequestBody(map);
 
@@ -135,7 +138,12 @@ public class RegisterActivity extends AppCompatActivity {
                             Object data = entity.getData();
                             if (data instanceof UserInfoEntity) {
                                 UserInfoEntity userinfo = (UserInfoEntity) data;
-                                AppCommonInfo.userid = userinfo.getUserid();
+                                //重置用户缓存信息
+                                AppCommonInfo.setUserid(userinfo.getUserid());
+                                AppCommonInfo.setToken("");
+                                AppCommonInfo.setPhone(mAccountPhone.getText().toString());
+                                AppCommonInfo.setPassword(mAccountPsw.getText().toString());
+
                                 Intent intent = PerfectInfoActivity.createActivity(RegisterActivity.this, userinfo.getUserid());
                                 startActivityForResult(intent, REQUEST_CODE_PERFECT);
                             }

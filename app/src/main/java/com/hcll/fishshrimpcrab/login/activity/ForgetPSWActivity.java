@@ -22,6 +22,7 @@ import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
 import com.hcll.fishshrimpcrab.login.LoginApi;
+import com.hcll.fishshrimpcrab.login.MD5Utils;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -127,7 +128,7 @@ public class ForgetPSWActivity extends AppCompatActivity {
                     Map<String, Object> map = new HashMap<>();
                     map.put("phone", resetAccountPhone.getText().toString());
                     map.put("code", resetSmsPsw.getText().toString());
-                    map.put("passwd", resetAccountPsw.getText().toString());
+                    map.put("passwd", MD5Utils.getMD5(resetAccountPsw.getText().toString()));
                     RequestBody body = JsonUtils.createJsonRequestBody(map);
                     Call<BaseResponseEntity> call = loginApi.resetPsw(body);
 

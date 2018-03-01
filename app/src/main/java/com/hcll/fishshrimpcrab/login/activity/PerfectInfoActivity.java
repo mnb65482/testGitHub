@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.main.MainActivity;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
@@ -172,7 +173,7 @@ public class PerfectInfoActivity extends AppCompatActivity {
                 switch (entity.getStatus()) {
                     //更新信息成功
                     case 0:
-                        Intent intent = MainActivity.createActivit(PerfectInfoActivity.this, userId);
+                        Intent intent = MainActivity.createActivit(PerfectInfoActivity.this, null);
                         startActivity(intent);
                         setResult(RESULT_OK);
                         finish();
@@ -214,11 +215,11 @@ public class PerfectInfoActivity extends AppCompatActivity {
 
     private boolean checkNotNull() {
         if (StringUtils.isEmpty(perfectInfoName.getText())) {
-            ToastUtils.showLong("请填写昵称！");
+            ToastUtils.showLong(R.string.perfect_info_nick);
             return false;
         }
         if (perfectInfoSex.getTag() == null) {
-            ToastUtils.showLong("请选择性别！");
+            ToastUtils.showLong(R.string.perfect_info_sex);
             return false;
         }
         return true;

@@ -21,12 +21,15 @@ import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.common.Constant;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
+import com.hcll.fishshrimpcrab.login.MD5Utils;
+import com.hcll.fishshrimpcrab.main.MainActivity;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import LoginProto.GameLogin;
 import butterknife.BindView;
@@ -72,6 +75,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         dialog = DialogUtils.createProgressDialog(this, null);
+        try {
+            InetAddress inetAddress = InetAddress.getByName(AppCommonInfo.socket_host);
+            socket = new Socket(inetAddress, AppCommonInfo.socket_port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick({R.id.login_account_commit_tv, R.id.login_forget_psw_tv, R.id.login_to_register_tv})
@@ -115,64 +124,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-//                    socket = new Socket(AppCommonInfo.socket_host, AppCommonInfo.socket_port);
-                    InetAddress inetAddress = InetAddress.getByName(AppCommonInfo.socket_host);
-                    socket = new Socket(inetAddress, AppCommonInfo.socket_port);
-
+                    if (socket == null) return;
                     GameLogin.LoginReq loginReq = GameLogin.LoginReq.newBuilder().setPhoneNum(loginAccountPhone.getText().toString())
-//                    .setPassword(MD5Utils.getMD5(loginAccountPsw.getText().toString())).build();
-                            .setPassword(loginAccountPsw.getText().toString())
+                            .setPassword(MD5Utils.getMD5(loginAccountPsw.getText().toString()))
                             .setImsi(Constant.IMEI)
+                            //设备类型 2 安卓
                             .setDeviceType(2)
+                            //登录类型:1是用户名密码 2是token模式
                             .setUserType(1).build();
                     Any any = Any.pack(loginReq);
                     GameLogin.LoginBody loginBody = GameLogin.LoginBody.newBuilder().setBody(any).build();
                     GameLogin.LoginHead loginHead = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.LOGIN).build();
                     GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(loginBody).setHead(loginHead).build();
-                    loginMsg.writeTo(socket.getOutputStream());
-//                    OutputStream outputStream = socket.getOutputStream();
-//                    outputStream.write(loginMsg.toByteArray());
-//                    outputStream.flush();
+                    loginMsg.writeDelimitedTo(socket.getOutputStream());
+                    InputStream inputStream = socket.getInputStream();
+                    GameLogin.LoginMsg loginMsgResp = GameLogin.LoginMsg.parseDelimitedFrom(inputStream);
+                    GameLogin.LoginHead head = loginMsgResp.getHead();
+                    if (head.getErrCode() == 0) {
+                        Message message = Message.obtain();
+                        message.obj = loginMsgResp.getBody().getBody().unpack(GameLogin.LoginResponse.class);
+                        message.what = 0;
+                        mhandler.sendMessage(message);
+                    } else {
+                        mhandler.sendEmptyMessage(head.getErrCode());
+                    }
                 } catch (IOException e) {
+                    mhandler.sendEmptyMessage(3);
                     e.printStackTrace();
                 }
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (socket != null) {
-                        InputStream inputStream = null;
-                        try {
-                            inputStream = socket.getInputStream();
-                            if (inputStream != null) {
-                                byte[] bytes = new byte[1024];
-                                int count = inputStream.read(bytes);
-                                if (count < 0) continue;
-                                byte[] temp = new byte[count];
-                                for (int i = 0; i < count; i++) {
-                                    temp[i] = bytes[i];
-                                }
-                                GameLogin.LoginMsg loginMsgResp = GameLogin.LoginMsg.parseFrom(temp);
-                                GameLogin.LoginHead head = loginMsgResp.getHead();
-                                if (head.getErrCode() == 0) {
-                                    GameLogin.LoginResponse loginResponse = loginMsgResp.getBody().getBody().unpack(GameLogin.LoginResponse.class);
-                                    Log.e("login", String.format("userid == %s ,ip == %s ,port == %s token == %s key == %s",
-                                            loginResponse.getUserId() + "", loginResponse.getIp(), loginResponse.getPort(),
-                                            loginResponse.getToken(), loginResponse.getKey()));
-                                }
-                            }
-                            mhandler.sendEmptyMessage(0);
-                        } catch (IOException e) {
-                            mhandler.sendEmptyMessage(0);
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-
             }
         }).start();
     }
@@ -195,6 +174,41 @@ public class LoginActivity extends AppCompatActivity {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+            switch (msg.what) {
+                case 0:
+                    if (msg.obj instanceof GameLogin.LoginResponse) {
+                        GameLogin.LoginResponse response = (GameLogin.LoginResponse) msg.obj;
+                        AppCommonInfo.setToken(response.getToken());
+                        AppCommonInfo.setUserid(response.getUserId());
+                        Intent intent = MainActivity.createActivit(LoginActivity.this, response);
+                        startActivity(intent);
+                        releaseSocket();
+                        finish();
+                    }
+                    break;
+                case 1://token 失效
+                    break;
+                case 2://用户名密码错误
+                    ToastUtils.showLong(R.string.login_erro);
+                    break;
+                case 3://系统异常
+                default:
+                    ToastUtils.showLong(R.string.login_system_erro);
+                    break;
+            }
         }
     };
+
+    private void releaseSocket() {
+        try {
+            if (null != socket) {
+                if (!socket.isClosed()) {
+                    socket.close();
+                }
+                socket = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

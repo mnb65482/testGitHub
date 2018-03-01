@@ -10,6 +10,9 @@
     <string name="guidepage_detail3">随时随地开启游戏乐趣</string>
 
     <!--登录 注册-->
+    <string name="login_erro">手机号或密码错误，请重新登录。</string>
+    <string name="login_system_erro">系统异常，请联系管理员。</string>
+    <string name="login_token_invalid">自动登录失效，请重新登录！</string>
     <string name="title_register">注册账号</string>
     <string name="title_reset">重置密码</string>
     <string name="title_perfect_info">完善资料</string>
@@ -48,6 +51,8 @@
     <string name="perfect_info_nodiomand">钻石不足</string>
     <string name="perfect_info_faiure">更新失败</string>
     <string name="perfect_info_illegal">包含非法字符</string>
+    <string name="perfect_info_nick">请填写昵称！</string>
+    <string name="perfect_info_sex">请选择性别！</string>
 
     <!--底部tab名称-->
     <string name="tab1">牌局</string>
