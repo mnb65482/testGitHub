@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/club_info_edit_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#212124"
+        android:gravity="top"
+        android:hint="@string/club_info_input"
+        android:maxLength="250"
+        android:minLines="5"
+        android:padding="8dp"
+        android:textColor="@color/qmui_config_color_white"
+        android:textColorHint="@color/qmui_config_color_75_white"
+        android:textSize="14sp" />
+
+</LinearLayout>

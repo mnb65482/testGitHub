@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/verification_code_dialog_bg"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/verification_info_close_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="4dp"
+        android:src="@drawable/verification_info_close_ic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/input_verification_info"
+        android:textColor="@color/qmui_config_color_white" />
+
+    <EditText
+        android:id="@+id/verification_info_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="#212124"
+        android:gravity="top"
+        android:hint="@string/club_info_input"
+        android:minLines="4"
+        android:padding="8dp"
+        android:textColor="@color/qmui_config_color_white"
+        android:textColorHint="@color/qmui_config_color_50_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/verification_info_sure_tv"
+        style="@style/common_commit_tv"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="18dp"
+        android:text="@string/ok" />
+
+</LinearLayout>

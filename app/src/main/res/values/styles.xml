@@ -65,4 +65,23 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="common_commit_tv">
+        <item name="android:background">@drawable/login_commit_btn_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/qmui_config_color_60_pure_black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--自定义用于去除背景-->
+    <style name="Verfication_info_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
 </resources>

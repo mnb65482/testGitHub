@@ -1,12 +1,12 @@
 package com.hcll.fishshrimpcrab.club.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.club.entity.ClubInfoEntity;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
@@ -24,6 +24,8 @@ public class ClubItemView extends LinearLayout {
     private TextView countTv;
     private TextView locationTv;
     private TextView gameTv;
+
+    private Activity mActivity;
 
     private ClubInfoEntity.ListBean listBean;
 
@@ -45,11 +47,19 @@ public class ClubItemView extends LinearLayout {
         locationTv = (TextView) findViewById(R.id.club_item_location);
         gameTv = (TextView) findViewById(R.id.club_item_game);
 
+        if (context instanceof Activity) {
+            mActivity = ((Activity) context);
+        }
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listBean != null) {
-                    ToastUtils.showLong(listBean.getName());
+                if (listBean != null && mActivity != null) {
+//                    mActivity.startActivity(ClubDetailActivity.createActivity(mActivity, listBean.getId()));
+//                    ToastUtils.showLong(listBean.getName());
+                    if (onItemClickListener != null) {
+                        onItemClickListener.clickItem(listBean);
+                    }
+
                 }
             }
         });
@@ -66,4 +76,13 @@ public class ClubItemView extends LinearLayout {
         gameTv.setText(listBean.getStatus() + "桌");
     }
 
+    public interface OnItemClickListener {
+        void clickItem(ClubInfoEntity.ListBean listBean);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 }

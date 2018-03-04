@@ -63,7 +63,6 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
     protected void firstBtnClick() {
         File file = new File(FileUtils.createCaptureFilePath());
         Uri imageUri = Uri.fromFile(file);
-
         getTakePhoto().onPickFromCaptureWithCrop(imageUri, getCropOptions());
     }
 

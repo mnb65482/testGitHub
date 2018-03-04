@@ -63,6 +63,8 @@ dependencies {
     //protobuf
 //    compile 'com.google.protobuf:protobuf-lite:3.0.0'
     compile 'com.google.protobuf:protobuf-java:3.0.0'
+    //swith Btn
+    compile 'com.zcw:togglebutton-library:1.0.0'
 }
 
 protobuf {

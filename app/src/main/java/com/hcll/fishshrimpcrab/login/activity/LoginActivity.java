@@ -1,10 +1,13 @@
 package com.hcll.fishshrimpcrab.login.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -29,17 +33,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.List;
+import java.util.concurrent.Executors;
 
 import LoginProto.GameLogin;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
-    //    @BindView(R.id.login_account_icon_qiv)
-//    QMUIRadiusImageView loginAccountIconQiv;
     @BindView(R.id.login_account_phone)
     EditText loginAccountPhone;
     @BindView(R.id.login_account_psw)
@@ -54,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
     TextView loginToRegisterTv;
 
     private static final int REQUEST_CODE_2_REGISTER = 101;
+
+    private static final int REQUEST_CODE_PHONE_STATE = 105;
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private Dialog dialog;
     private Socket socket;
 
@@ -63,6 +72,11 @@ public class LoginActivity extends AppCompatActivity {
         QMUIStatusBarHelper.translucent(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        phoneTask();
+        if (!StringUtils.isEmpty(AppCommonInfo.getToken())) {
+            startActivity(MainActivity.createActivit(this, null));
+            finish();
+        }
 
         loginPswVisibilityCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,12 +89,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         dialog = DialogUtils.createProgressDialog(this, null);
-        try {
-            InetAddress inetAddress = InetAddress.getByName(AppCommonInfo.socket_host);
-            socket = new Socket(inetAddress, AppCommonInfo.socket_port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @OnClick({R.id.login_account_commit_tv, R.id.login_forget_psw_tv, R.id.login_to_register_tv})
@@ -112,19 +120,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         login();
-
-//        Intent intent = MainActivity.createActivit(this, 0);
-//        startActivity(intent);
-//        finish();
     }
 
     public void login() {
         dialog.show();
-        new Thread(new Runnable() {
+
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    if (socket == null) return;
+                    initSocket();
                     GameLogin.LoginReq loginReq = GameLogin.LoginReq.newBuilder().setPhoneNum(loginAccountPhone.getText().toString())
                             .setPassword(MD5Utils.getMD5(loginAccountPsw.getText().toString()))
                             .setImsi(Constant.IMEI)
@@ -136,9 +141,11 @@ public class LoginActivity extends AppCompatActivity {
                     GameLogin.LoginBody loginBody = GameLogin.LoginBody.newBuilder().setBody(any).build();
                     GameLogin.LoginHead loginHead = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.LOGIN).build();
                     GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(loginBody).setHead(loginHead).build();
+                    Log.w(TAG, "发送登录信息: " + loginMsg.toString());
                     loginMsg.writeDelimitedTo(socket.getOutputStream());
                     InputStream inputStream = socket.getInputStream();
                     GameLogin.LoginMsg loginMsgResp = GameLogin.LoginMsg.parseDelimitedFrom(inputStream);
+                    Log.w(TAG, "服务端响应信息: " + loginMsgResp.toString());
                     GameLogin.LoginHead head = loginMsgResp.getHead();
                     if (head.getErrCode() == 0) {
                         Message message = Message.obtain();
@@ -150,10 +157,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     mhandler.sendEmptyMessage(3);
-                    e.printStackTrace();
+                    Log.e(TAG, "Socket: " + e.getMessage());
+                    releaseSocket();
+                    initSocket();
                 }
             }
-        }).start();
+        });
     }
 
 
@@ -167,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -210,5 +220,48 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initSocket() {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(AppCommonInfo.socket_host);
+            socket = new Socket(inetAddress, AppCommonInfo.socket_port);
+            Log.w(TAG, "初始化登录socket成功！");
+        } catch (IOException e) {
+            Log.e(TAG, "初始化登录socket失败！");
+            e.printStackTrace();
+        }
+    }
+
+    private boolean hasPhonePermission() {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_STATE);
+    }
+
+    @AfterPermissionGranted(REQUEST_CODE_PHONE_STATE)
+    public void phoneTask() {
+        if (!hasPhonePermission()) {
+            EasyPermissions.requestPermissions(this,
+                    "物2斗需要获取您的手机状态，请确认。",
+                    REQUEST_CODE_PHONE_STATE,
+                    Manifest.permission.READ_PHONE_STATE);
+        }
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

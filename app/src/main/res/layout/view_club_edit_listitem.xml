@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:background="#1a1a1a"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/club_edit_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="14sp"
+        tools:text="创建者" />
+
+    <TextView
+        android:id="@+id/club_edit_detail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="160dp"
+        android:textColor="@color/qmui_config_color_75_white"
+        android:textColorHint="@color/qmui_config_color_50_white"
+        android:textSize="12sp"
+        tools:hint="请输入名称" />
+
+    <ImageView
+        android:id="@+id/club_edit_next_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/club_create_next_ic"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/club_edit_custom_fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
+</LinearLayout>

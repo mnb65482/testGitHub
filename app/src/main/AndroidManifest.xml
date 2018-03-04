@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".FSCApplication"
@@ -19,21 +19,23 @@
             android:launchMode="singleTask">
 
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+        <service android:name=".login.service.LoginService" />
+
         <activity
             android:name=".welcome.WelcomeActivity"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".welcome.GuidePageActivity" />
@@ -53,6 +55,13 @@
         <activity
             android:name=".login.activity.SexSelectActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--俱乐部-->
+        <activity android:name=".club.activity.CreateClubActivity" />
+        <activity android:name=".club.activity.ClubInfoEditActivity" />
+        <activity android:name=".club.activity.JoinClubActivity" />
+        <activity android:name=".club.activity.ClubDetailActivity" />
+        <activity android:name=".club.activity.PersonDetailActivity" />
     </application>
 
 </manifest>

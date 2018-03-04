@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.google.protobuf.Any;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.main.MainActivity;
@@ -14,8 +15,8 @@ import com.hcll.fishshrimpcrab.main.MainActivity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.Executors;
 
 import LoginProto.GameLogin;
 
@@ -36,14 +37,13 @@ public class LoginService extends Service {
     /**
      * 是否连接
      */
-    private boolean _connect;
+    private boolean _connect = true;
     private ReceiveThread mReceiveThread;
-    private boolean receiveStop;
-    private Date lastKeepAliveOkTime;
     private String resIp;
     private int resPort;
     private int userid;
     private long sendTime;
+    private String key;
 
     @Nullable
     @Override
@@ -60,26 +60,25 @@ public class LoginService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         userid = intent.getIntExtra(EXTRA_USERID, 0);
-        String key = intent.getStringExtra(EXTRA_KEY);
+        key = intent.getStringExtra(EXTRA_KEY);
         resIp = intent.getStringExtra(EXTRA_IP);
         resPort = intent.getIntExtra(EXTRA_PORT, 0);
-        connect();
+        _connect = true;
+        mReceiveThread = new ReceiveThread();
+        mReceiveThread.start();
 
-        GameLogin.LoginResReq loginResReq = GameLogin.LoginResReq.newBuilder().setKey(key).setUserId(userid).build();
-        Any any = Any.pack(loginResReq);
-        GameLogin.LoginBody body = GameLogin.LoginBody.newBuilder().setBody(any).build();
-        GameLogin.LoginHead head = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES).build();
-        GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(body).setHead(head).build();
-        sendmessage(loginMsg);
-
-
-//        GameLogin.LoginReq loginReq = GameLogin.LoginReq.newBuilder().setPhoneNum(phone).setPassword(psw).build();
-//        Any any = Any.pack(loginReq);
-//        GameLogin.LoginBody loginBody = GameLogin.LoginBody.newBuilder().setBody(any).build();
-//        GameLogin.LoginHead loginHead = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.LOGIN).build();
-//        GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(loginBody).setHead(loginHead).build();
-
-
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                initSocket();
+                GameLogin.LoginResReq loginResReq = GameLogin.LoginResReq.newBuilder().setKey(key).setUserId(userid).build();
+                Any any = Any.pack(loginResReq);
+                GameLogin.LoginBody body = GameLogin.LoginBody.newBuilder().setBody(any).build();
+                GameLogin.LoginHead head = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES).build();
+                GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(body).setHead(head).build();
+                sendmessage(loginMsg);
+            }
+        });
         return Service.START_REDELIVER_INTENT;
     }
 
@@ -92,42 +91,15 @@ public class LoginService extends Service {
         return intent;
     }
 
-    public void connect() {
+    public void initSocket() {
         Log.w(TAG, "准备链接...");
         try {
             socket = new Socket(resIp, resPort);
-            socket.setSoTimeout(AppCommonInfo.reconnectTime);
-            mReceiveThread = new ReceiveThread();
-            mReceiveThread.start();
             Log.w(TAG, "链接成功.");
 
         } catch (Exception e) {
             Log.e(TAG, "链接出错.");
             e.printStackTrace();
-        }
-    }
-
-
-    public void KeepAlive() {
-//        // 判断socket是否已断开,断开就重连
-//        if (lastKeepAliveOkTime != null) {
-//            Log.w(TAG, "上次心跳成功时间:" + TimeUtils.date2String(lastKeepAliveOkTime));
-//            Date now = Calendar.getInstance().getTime();
-//            long between = (now.getTime() - lastKeepAliveOkTime.getTime());// 得到两者的毫秒数
-//            if (between > 60 * 1000) {
-//                Log.e(TAG, "心跳异常超过1分钟,重新连接:");
-//                lastKeepAliveOkTime = null;
-//                socket = null;
-//            }
-//
-//        } else {
-//            lastKeepAliveOkTime = Calendar.getInstance().getTime();
-//        }
-        lastKeepAliveOkTime = Calendar.getInstance().getTime();
-
-        if (!checkIsAlive()) {
-            Log.e(TAG, "链接已断开,重新连接.");
-            connect();
         }
     }
 
@@ -144,15 +116,14 @@ public class LoginService extends Service {
 
     }
 
-    //然后发送数据的方法
+    //发送数据的方法
     public void sendmessage(GameLogin.LoginMsg msg) {
-//        if (!checkIsAlive())
-//            return;
+
         Log.w(TAG, "准备发送消息:" + msg.toString());
         try {
             if (socket != null && socket.isConnected()) {
                 if (!socket.isOutputShutdown()) {
-                    msg.writeTo(socket.getOutputStream());
+                    msg.writeDelimitedTo(socket.getOutputStream());
                 }
             }
             Log.w(TAG, "发送成功!");
@@ -165,40 +136,46 @@ public class LoginService extends Service {
     private class ReceiveThread extends Thread {
         @Override
         public void run() {
-            while (true) {
+            while (_connect) {
                 try {
                     if (sendTime != 0 && System.currentTimeMillis() - sendTime > AppCommonInfo.reconnectTime) {
                         Log.e(TAG, "心跳包挂了:重启中。 ");
-                        releaseLastSocket();
-                        connect();
+                        releaseSocket();
+                        initSocket();
+                        sendTime = 0;
+                        sendHear();
                         break;
                     }
 
                     if (socket != null && socket.isConnected()) {
                         if (!socket.isInputShutdown()) {
+                            Log.w(TAG, "获得输入流。");
                             InputStream inputStream = socket.getInputStream();
-                            GameLogin.LoginMsg loginMsgResp = GameLogin.LoginMsg.parseFrom(inputStream);
+                            Log.w(TAG, "解析输入流。");
+                            GameLogin.LoginMsg loginMsgResp = GameLogin.LoginMsg.parseDelimitedFrom(inputStream);
                             GameLogin.LoginHead head = loginMsgResp.getHead();
+                            Log.w(TAG, "解析输入流成功。");
 
                             if (head.getErrCode() == 0) {
                                 switch (head.getCmdId().getNumber()) {
                                     //res登录返回
                                     case GameLogin.LoginCmd.RES_VALUE:
+                                        Log.w(TAG, "res登录返回成功 ");
                                         GameLogin.LoginBody body = loginMsgResp.getBody();
                                         GameLogin.LoginResResponse resResponse = body.getBody().unpack(GameLogin.LoginResResponse.class);
-                                        sendBroadcast(MainActivity.createLoginResReceiver(resResponse.getGender(),
-                                                resResponse.getNick(), resResponse.getPortrait(), resResponse.getDiamonds()));
-
+                                        sendBroadcast(MainActivity.createLoginResReceiver(resResponse));
                                         sendHear();
                                         break;
                                     //接收到心跳包
                                     case GameLogin.LoginCmd.RES_HEARTBEAT_VALUE:
+                                        Log.w(TAG, "心跳包接收成功 ");
                                         Thread.sleep(AppCommonInfo.heartTime);
                                         sendHear();
                                         break;
                                     //被踢出,发送广播返回到登录
                                     case GameLogin.LoginCmd.RES_LOGOUT_VALUE:
-                                        sendBroadcast(MainActivity.createLoginResReceiver(0, null, null, 0));
+                                        Log.w(TAG, "用户被踢出！ ");
+                                        sendBroadcast(MainActivity.createLoginResReceiver(null));
                                         break;
                                 }
                             }
@@ -207,8 +184,8 @@ public class LoginService extends Service {
                         if (socket != null && !socket.isConnected()) {
                             Log.w(TAG, "链接状态:" + socket.isConnected());
                         }
-                        releaseLastSocket();
-                        connect();
+//                        releaseSocket();
+//                        initSocket();
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "监听出错:" + e.toString());
@@ -224,6 +201,8 @@ public class LoginService extends Service {
     private void sendHear() {
 
         sendTime = System.currentTimeMillis();
+        Log.w(TAG, "sendHear: sendTime = " + TimeUtils.date2String(new Date(sendTime)));
+
         GameLogin.ResHeartBeatReq heartBeatReq = GameLogin.ResHeartBeatReq.newBuilder().setUserId(userid).build();
         GameLogin.ResHeartBeatReq.newBuilder().setUserId(userid).build();
         Any any = Any.pack(heartBeatReq);
@@ -233,7 +212,10 @@ public class LoginService extends Service {
         sendmessage(loginMsg);
     }
 
-    private void releaseLastSocket() {
+    /**
+     * 释放socket
+     */
+    private void releaseSocket() {
         try {
             if (null != socket) {
                 if (!socket.isClosed()) {
@@ -246,4 +228,10 @@ public class LoginService extends Service {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        _connect = false;
+        releaseSocket();
+        super.onDestroy();
+    }
 }

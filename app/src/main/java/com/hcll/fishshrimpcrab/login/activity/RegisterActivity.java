@@ -24,7 +24,7 @@ import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
 import com.hcll.fishshrimpcrab.login.LoginApi;
 import com.hcll.fishshrimpcrab.login.MD5Utils;
-import com.hcll.fishshrimpcrab.login.entity.UserInfoEntity;
+import com.hcll.fishshrimpcrab.login.entity.UserIdEntity;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -39,8 +39,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.blankj.utilcode.util.LogUtils.A;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -125,10 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
         map.put("invate_code", mInviteCodeEt.getText().toString());
         RequestBody body = JsonUtils.createJsonRequestBody(map);
 
-        Call<BaseResponseEntity<UserInfoEntity>> call = loginApi.register(body);
-        call.enqueue(new Callback<BaseResponseEntity<UserInfoEntity>>() {
+        Call<BaseResponseEntity<UserIdEntity>> call = loginApi.register(body);
+        call.enqueue(new Callback<BaseResponseEntity<UserIdEntity>>() {
             @Override
-            public void onResponse(Call<BaseResponseEntity<UserInfoEntity>> call, Response<BaseResponseEntity<UserInfoEntity>> response) {
+            public void onResponse(Call<BaseResponseEntity<UserIdEntity>> call, Response<BaseResponseEntity<UserIdEntity>> response) {
                 dialog.dismiss();
                 BaseResponseEntity entity = response.body();
                 if (entity != null) {
@@ -136,8 +134,8 @@ public class RegisterActivity extends AppCompatActivity {
                         //注册成功
                         case 0:
                             Object data = entity.getData();
-                            if (data instanceof UserInfoEntity) {
-                                UserInfoEntity userinfo = (UserInfoEntity) data;
+                            if (data instanceof UserIdEntity) {
+                                UserIdEntity userinfo = (UserIdEntity) data;
                                 //重置用户缓存信息
                                 AppCommonInfo.setUserid(userinfo.getUserid());
                                 AppCommonInfo.setToken("");
@@ -166,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BaseResponseEntity<UserInfoEntity>> call, Throwable t) {
+            public void onFailure(Call<BaseResponseEntity<UserIdEntity>> call, Throwable t) {
                 ToastUtils.showLong(R.string.register_failuer);
                 dialog.dismiss();
             }

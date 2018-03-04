@@ -44,10 +44,12 @@ public class AppCommonInfo {
     /**
      * 自动重连等待时间
      */
-    public static int reconnectTime = 20;
+    public static int reconnectTime = 20 * 1000;
+
+    public static String clubCreateFee = "500";
     //-------------配置相关
 
-    //-------用户信息
+    //-----------------用户信息相关
     /**
      * Userid登陆后保存
      */
@@ -66,6 +68,26 @@ public class AppCommonInfo {
      * 密码 注册后保存
      */
     public static String password = "";
+
+    /**
+     * 用户性别
+     */
+    public static int userGender = 0;
+
+    /**
+     * 用户昵称
+     */
+    public static String userNick = "";
+
+    /**
+     * 用户头像
+     */
+    public static String userPortrait = "";
+
+    /**
+     * 用户钻石数
+     */
+    public static int userDiamonds = 0;
 
 
     public static void setToken(String token) {
@@ -108,4 +130,58 @@ public class AppCommonInfo {
     public static void setPassword(String password) {
         AppCommonInfo.password = password;
     }
+
+    public static int getUserGender() {
+        return userGender;
+    }
+
+    public static void setUserGender(int userGender) {
+        AppCommonInfo.userGender = userGender;
+    }
+
+    public static String getUserNick() {
+        return userNick;
+    }
+
+    public static void setUserNick(String userNick) {
+        AppCommonInfo.userNick = userNick;
+    }
+
+    public static String getUserPortrait() {
+        return userPortrait;
+    }
+
+    public static void setUserPortrait(String userPortrait) {
+        AppCommonInfo.userPortrait = userPortrait;
+    }
+
+    public static int getUserDiamonds() {
+        return userDiamonds;
+    }
+
+    public static void setUserDiamonds(int userDiamonds) {
+        AppCommonInfo.userDiamonds = userDiamonds;
+    }
+
+    /**
+     * 清除基本信息
+     */
+    public static void clear() {
+        phone = "";
+        password = "";
+        userGender = 0;
+        userNick = "";
+        userPortrait = "";
+        userDiamonds = 0;
+    }
+
+    /**
+     * 注销
+     */
+    public static void loginOut() {
+        setToken("");
+        setUserid(0);
+        clear();
+    }
+
 }

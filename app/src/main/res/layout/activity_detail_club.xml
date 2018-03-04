@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="148dp">
+
+                <ImageView
+                    android:id="@+id/club_detail_bgimage_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/login_bg" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                        android:id="@+id/club_detail_head_iv"
+                        android:layout_width="78dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:clickable="false"
+                        android:src="@drawable/club_empty_info"
+                        app:qmui_border_color="?attr/qmui_config_color_gray_6"
+                        app:qmui_border_width="1px"
+                        app:qmui_is_circle="true" />
+
+                    <TextView
+                        android:id="@+id/club_detail_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="12sp"
+                        tools:text="鱼虾蟹大集合" />
+
+                    <TextView
+                        android:id="@+id/club_detail_id_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/qmui_config_color_75_white"
+                        android:textSize="10sp"
+                        tools:text="ID:998392" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_name_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cel_name="@string/club_creat_name"
+                app:cel_shownext="true" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_creater_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cel_name="@string/club_creater"
+                app:cel_shownext="false" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_notinfo_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cel_name="@string/into_not_disturb"
+                app:cel_shownext="false" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_region_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cel_name="@string/club_create_region"
+                app:cel_shownext="false" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_member_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cel_name="@string/club_member"
+                app:cel_shownext="true" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_intro_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cel_name="@string/club_create_intro"
+                app:cel_shownext="true" />
+
+            <LinearLayout
+                android:id="@+id/club_detail_intro_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1a1a1a"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/club_create_intro"
+                    android:textColor="@color/qmui_config_color_white" />
+
+                <TextView
+                    android:id="@+id/club_detail_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/qmui_config_color_50_white"
+                    android:textSize="12sp"
+                    tools:text="本俱乐部提倡文明健康玩游戏,禁止赌博,发布不文明信息;否则将踢出俱乐部;" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/club_detail_createtime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textColor="@color/qmui_config_color_white"
+            android:textSize="12sp"
+            tools:text="创建于2011-11-11" />
+
+        <TextView
+            android:id="@+id/club_detail_exit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#a33b3b"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/exit"
+            android:textColor="@color/qmui_config_color_white" />
+    </LinearLayout>
+
+
+</LinearLayout>

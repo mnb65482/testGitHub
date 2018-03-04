@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">物2斗</string>
     <string name="ok">确认</string>
+    <string name="search_fauiler">查询失败！</string>
+    <string name="system_erro">系统异常！</string>
+
     <!--引导页-->
     <string name="guidepage_title1">洗牌发牌文案</string>
     <string name="guidepage_title2">私人房间</string>
@@ -11,8 +14,9 @@
 
     <!--登录 注册-->
     <string name="login_erro">手机号或密码错误，请重新登录。</string>
-    <string name="login_system_erro">系统异常，请联系管理员。</string>
+    <string name="login_system_erro">系统异常，重新登录。</string>
     <string name="login_token_invalid">自动登录失效，请重新登录！</string>
+    <string name="login_forced_exit">你的账号已经在另一台设备登录，请重新登录！</string>
     <string name="title_register">注册账号</string>
     <string name="title_reset">重置密码</string>
     <string name="title_perfect_info">完善资料</string>
@@ -67,7 +71,43 @@
     <string name="my_club">我的俱乐部</string>
     <string name="join_club">加入的俱乐部</string>
     <string name="create_to_club">创建俱乐部</string>
+    <string name="create_to_club_success">俱乐部创建成功！</string>
+    <string name="create_to_club_failuer">俱乐部创建失败！</string>
     <string name="join_to_club">加入俱乐部</string>
+    <string name="club_creat_name">俱乐部名称</string>
+    <string name="club_create_input_name">请输入名称</string>
+    <string name="club_create_region">俱乐部地区</string>
+    <string name="club_create_input_region">请输入地区</string>
+    <string name="club_create_intro">俱乐部简介</string>
+    <string name="club_create_input_intro">请输入简介</string>
+    <string name="club_create_fee">花费：</string>
+    <string name="club_create_balance">余额：</string>
+    <string name="club_sure_create">确定创建</string>
+    <string name="club_info_input">请输入</string>
+    <string name="club_edit_name">编辑俱乐部名称</string>
+    <string name="club_edit_intro">编辑俱乐部简介</string>
+    <string name="club_edit_region">输入地区名称</string>
+    <string name="club_edit_save">保存</string>
+    <string name="all_search_club">搜索到的俱乐部</string>
+    <string name="register_as_new">注册新用户</string>
+    <string name="apply_for_join">申请加入</string>
+    <string name="input_verification_info">输入验证消息</string>
+    <string name="search_club">搜索俱乐部</string>
+    <string name="apply_club_succsee">申请成功！</string>
+    <string name="apply_club_failuer">申请失败！</string>
+    <string name="data_exception">数据库异常！</string>
+    <string name="club_contain">玩家已在该俱乐部！</string>
+    <string name="club_disband">俱乐部已解散！</string>
+    <string name="exit">退出</string>
+    <string name="club_member">俱乐部成员</string>
+    <string name="into_not_disturb">消息免打扰</string>
+    <string name="club_creater">创建者</string>
+    <string name="club_detail">俱乐部详情</string>
+    <string name="club_update_Success">俱乐部信息更新成功！</string>
+    <string name="club_update_failuer">俱乐部信息更新失败！</string>
+    <string name="club_repeat">已有相同俱乐部!</string>
+    <string name="club_not_exitence">"俱乐部不存在!</string>
+    <string name="title_person_detail">个人详情</string>
 
 
 </resources>

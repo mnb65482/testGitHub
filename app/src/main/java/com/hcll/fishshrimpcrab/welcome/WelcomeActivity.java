@@ -27,9 +27,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private QMUIDialog settingDialog;
     private QMUIDialog successDialog;
 
-//    @BindView(R.id.topbar)
-//    QMUITopBar mTopBar;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +49,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (NotificationUtils.isNotificationEnabled(this)) {
-//            showPlayDialog();
             settingDialog.dismiss();
             successDialog.show();
         }

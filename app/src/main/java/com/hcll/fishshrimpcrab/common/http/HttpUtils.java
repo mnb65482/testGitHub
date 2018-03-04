@@ -6,9 +6,11 @@ import android.util.Log;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
+import com.hcll.fishshrimpcrab.common.Constant;
 import com.hcll.fishshrimpcrab.common.http.interceptor.HttpLoggingInterceptor;
 import com.hcll.fishshrimpcrab.common.http.ssl.HostNameVerifier;
 import com.hcll.fishshrimpcrab.common.http.ssl.HttpSSLContext;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -89,8 +91,8 @@ public class HttpUtils {
 //        return createClientBuilder(context, 0, false, "");
         OkHttpClient.Builder clientBuilder = createClientBuilder(context, 0, false, "");
         HttpRequestHeaderInterceptor headerInterceptor = new HttpRequestHeaderInterceptor();
-        headerInterceptor.addHeader("md5at", AppCommonInfo.token);
-        headerInterceptor.addHeader("did", DeviceUtils.getAndroidID());
+        headerInterceptor.addHeader("md5at", AppCommonInfo.getToken());
+        headerInterceptor.addHeader("did", Constant.IMEI);
         clientBuilder.interceptors().add(0, headerInterceptor);
         return clientBuilder;
     }

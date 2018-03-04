@@ -126,15 +126,11 @@
 
         <TextView
             android:id="@+id/login_account_commit_tv"
+            style="@style/common_commit_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/login_commit_btn_bg"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/login_text"
-            android:textColor="@color/qmui_config_color_60_pure_black"
-            android:textSize="12sp" />
+            android:text="@string/login_text" />
 
         <TextView
             android:id="@+id/login_to_register_tv"
@@ -144,7 +140,7 @@
             android:background="@drawable/login_register_bg"
             android:gravity="center"
             android:padding="8dp"
-            android:text="注册新用户"
+            android:text="@string/register_as_new"
             android:textColor="@color/common_text_color"
             android:textSize="12sp" />
 
