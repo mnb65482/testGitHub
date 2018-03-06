@@ -62,6 +62,7 @@
         <activity android:name=".club.activity.JoinClubActivity" />
         <activity android:name=".club.activity.ClubDetailActivity" />
         <activity android:name=".club.activity.PersonDetailActivity" />
+        <activity android:name=".club.activity.ClubMemberListActivity" />
     </application>
 
 </manifest>

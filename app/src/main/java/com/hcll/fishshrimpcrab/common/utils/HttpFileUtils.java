@@ -38,7 +38,7 @@ public class HttpFileUtils {
     }
 
     public static void loadImage2View(Context context, String httpid, ImageView imageView) {
-        Picasso.with(context).load(AppCommonInfo.ImageDownLoadPath + httpid).error(R.drawable.login_logo).into(imageView);
+        Picasso.with(context).load(AppCommonInfo.ImageDownLoadPath + httpid).error(R.drawable.default_head_ic).into(imageView);
     }
 
 }

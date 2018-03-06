@@ -20,7 +20,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.base.BaseActivity;
 import com.hcll.fishshrimpcrab.club.ClubApi;
-import com.hcll.fishshrimpcrab.club.entity.ClubEditType;
+import com.hcll.fishshrimpcrab.club.enums.ClubEditType;
 import com.hcll.fishshrimpcrab.club.entity.ClubDetailEntity;
 import com.hcll.fishshrimpcrab.club.widget.ClubEditListItem;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
@@ -263,8 +263,8 @@ public class ClubDetailActivity extends BaseActivity {
         createtimeTv.setText("创建于" + TimeUtils.date2String(new Date(data.getCreateTime()),
                 new SimpleDateFormat("yyyy-MM-dd")));
 
-        String message = "确定要退出俱乐部？";
-        String btnText = "退出俱乐部";
+        String message = getString(R.string.sure_exit_club);
+        String btnText = getString(R.string.exit_club);
 
         if (isCreator) {
             nameCeli.setVisibility(View.VISIBLE);
@@ -274,17 +274,17 @@ public class ClubDetailActivity extends BaseActivity {
             introLl.setVisibility(View.GONE);
             introCeli.setVisibility(View.VISIBLE);
             introCeli.setDetail(StringUtils.isEmpty(data.getDesc()) ? "暂无简介" : data.getDesc());
-            exitTv.setText("解散");
+            exitTv.setText(getString(R.string.dismiss));
 
-            message = "确定要解散俱乐部？";
-            btnText = "解散俱乐部";
+            message = getString(R.string.sure_dismiss_club);
+            btnText = getString(R.string.dismiss_club);
 
         }
 
         exitDialog = new QMUIDialog.MessageDialogBuilder(this)
-                .setTitle("提示")
+                .setTitle(getString(R.string.prompt))
                 .setMessage(message)
-                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                .addAction(getString(R.string.cancel), new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
@@ -328,6 +328,7 @@ public class ClubDetailActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.club_detail_member_celi:
+                startActivity(ClubMemberListActivity.createActivity(this, clubId, isCreator));
                 break;
             case R.id.club_detail_exit_tv:
                 exitDialog.show();

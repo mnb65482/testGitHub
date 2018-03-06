@@ -1,13 +1,12 @@
-package com.hcll.fishshrimpcrab.club.entity;
+package com.hcll.fishshrimpcrab.club.enums;
 
 import android.support.annotation.DrawableRes;
-
 import com.hcll.fishshrimpcrab.R;
 
 /**
+ *
  * Created by hong on 2018/3/5.
  */
-
 public enum GenderEnum {
     boy(0, "男", R.drawable.comm_boy_ic),
     girl(1, "女", R.drawable.comm_girl_ic);
@@ -18,7 +17,7 @@ public enum GenderEnum {
     @DrawableRes
     int drawableId;
 
-    GenderEnum(int drawableId, String name, int id) {
+    GenderEnum(int id, String name, @DrawableRes int drawableId) {
         this.drawableId = drawableId;
         this.id = id;
         this.name = name;

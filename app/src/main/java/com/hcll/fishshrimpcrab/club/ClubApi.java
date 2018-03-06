@@ -2,6 +2,7 @@ package com.hcll.fishshrimpcrab.club;
 
 import com.hcll.fishshrimpcrab.club.entity.ClubDetailEntity;
 import com.hcll.fishshrimpcrab.club.entity.ClubInfoEntity;
+import com.hcll.fishshrimpcrab.club.entity.ClubMemberEntity;
 import com.hcll.fishshrimpcrab.club.entity.SearchClubEntity;
 import com.hcll.fishshrimpcrab.club.entity.UserInfoEntity;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
@@ -109,5 +110,25 @@ public interface ClubApi {
     @Headers("Content-Type:application/json")
     @POST("customer/detail")
     Call<BaseResponseEntity<UserInfoEntity>> getUserDetail(@Body RequestBody body);
+
+    /**
+     * 获取俱乐部成员列表
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/mlist")
+    Call<BaseResponseEntity<List<ClubMemberEntity>>> getMemberList(@Body RequestBody body);
+
+    /**
+     * 获取俱乐部成员列表
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/set-role")
+    Call<BaseResponseEntity> setMemberRole(@Body RequestBody body);
 
 }

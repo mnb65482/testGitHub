@@ -14,7 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.base.BaseActivity;
 import com.hcll.fishshrimpcrab.club.ClubApi;
-import com.hcll.fishshrimpcrab.club.entity.GenderEnum;
+import com.hcll.fishshrimpcrab.club.enums.GenderEnum;
 import com.hcll.fishshrimpcrab.club.entity.UserInfoEntity;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;

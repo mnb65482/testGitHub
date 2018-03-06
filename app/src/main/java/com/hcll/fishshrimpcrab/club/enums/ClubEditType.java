@@ -1,4 +1,4 @@
-package com.hcll.fishshrimpcrab.club.entity;
+package com.hcll.fishshrimpcrab.club.enums;
 
 
 /**
