@@ -13,8 +13,8 @@ android {
     compileSdkVersion 27
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "com.hcll.fishshrimpcrab"
-        minSdkVersion 16
+        applicationId "com.hcll.wu2dou"
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -62,15 +62,19 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //protobuf
 //    compile 'com.google.protobuf:protobuf-lite:3.0.0'
-    compile 'com.google.protobuf:protobuf-java:3.0.0'
-    //swith Btn
-    compile 'com.zcw:togglebutton-library:1.0.0'
+    compile 'com.google.protobuf:protobuf-java:3.5.1'
+//    //swith Btn
+//    compile 'com.zcw:togglebutton-library:1.0.0'
+    compile project(':togglebutton-library')
+    compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
+
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 }
 
 protobuf {
     //配置protoc编译器
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.0.0'
+        artifact = 'com.google.protobuf:protoc:3.5.1'
     }
     //这里配置生成目录，编译后会在build的目录下生成对应的java文件
     generateProtoTasks {

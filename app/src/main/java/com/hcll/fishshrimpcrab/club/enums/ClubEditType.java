@@ -8,7 +8,7 @@ package com.hcll.fishshrimpcrab.club.enums;
 public enum ClubEditType {
 
     ClubName("name"),
-    ClubRegion("areaID"),
+    ClubRegion("area"),
     ClubDesc("desc");
 
     private String id;

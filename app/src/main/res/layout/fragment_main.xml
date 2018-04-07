@@ -3,6 +3,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_frag_bg"
+    android:gravity="center"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/main_invitation_code_prompt"
+            android:textColor="@color/qmui_config_color_white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:background="@color/login_edit_bg"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/main_invitation_code_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/login_fill_bg"
+                android:drawableLeft="@drawable/main_invitation_code_ic"
+                android:drawablePadding="8dp"
+                android:hint="@string/invitation_code2"
+                android:inputType="number"
+                android:maxLength="9"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/main_to_game_iv"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_to_game_ic" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp" />
+
+        <ImageView
+            android:id="@+id/main_create_game_iv"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_create_game_ic" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

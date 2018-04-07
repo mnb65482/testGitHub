@@ -1,2 +1,2 @@
 //include ':app',':circleindicator'
-include ':app', ':tabBar_library'
+include ':app', ':tabBar_library',":togglebutton-library"

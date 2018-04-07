@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.common.utils;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
 import com.hcll.fishshrimpcrab.R;
@@ -39,6 +40,10 @@ public class HttpFileUtils {
 
     public static void loadImage2View(Context context, String httpid, ImageView imageView) {
         Picasso.with(context).load(AppCommonInfo.ImageDownLoadPath + httpid).error(R.drawable.default_head_ic).into(imageView);
+    }
+
+    public static void loadImage2View(Context context, String httpid, @DrawableRes int erroDrawableId, ImageView imageView) {
+        Picasso.with(context).load(AppCommonInfo.ImageDownLoadPath + httpid).error(erroDrawableId).into(imageView);
     }
 
 }

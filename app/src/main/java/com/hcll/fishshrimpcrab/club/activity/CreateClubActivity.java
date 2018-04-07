@@ -96,17 +96,18 @@ public class CreateClubActivity extends BaseActivity {
 
     private void initTopBar() {
         showTopBar();
-        QMUITopBar topBar = getTopBar();
-        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
-        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
-        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        TextView title = topBar.setTitle(getString(R.string.create_to_club));
-        title.setTextColor(Color.WHITE);
+        getTopBar().setTitle(getString(R.string.create_to_club));
+//        QMUITopBar topBar = getTopBar();
+//        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
+//        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
+//        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//        TextView title = topBar.setTitle(getString(R.string.create_to_club));
+//        title.setTextColor(Color.WHITE);
     }
 
     public static Intent createActivity(Context context) {

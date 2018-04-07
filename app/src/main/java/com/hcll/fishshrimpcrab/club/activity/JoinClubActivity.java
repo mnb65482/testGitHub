@@ -1,16 +1,15 @@
 package com.hcll.fishshrimpcrab.club.activity;
 
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
@@ -23,8 +22,6 @@ import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
-import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +41,8 @@ import retrofit2.Response;
 
 public class JoinClubActivity extends BaseActivity {
 
+    private static final String TAG = JoinClubActivity.class.getSimpleName();
+
     @BindView(R.id.join_club_search_et)
     EditText searchEt;
     @BindView(R.id.club_seach_result_lv)
@@ -51,6 +50,7 @@ public class JoinClubActivity extends BaseActivity {
     private ClubApi retrofit;
     private SearchClubAdapter adapter;
     private Dialog progressDialog;
+    private Call<BaseResponseEntity<List<SearchClubEntity>>> call;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,23 +82,23 @@ public class JoinClubActivity extends BaseActivity {
 
     private void initTopBar() {
         showTopBar();
-        QMUITopBar topBar = getTopBar();
-        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
-        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
-        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        TextView titleTV = topBar.setTitle(R.string.join_to_club);
-        titleTV.setTextColor(Color.WHITE);
+        getTopBar().setTitle(R.string.join_to_club);
     }
 
     private void initListView() {
         addListViewHead();
         adapter = new SearchClubAdapter(this, new ArrayList<SearchClubEntity>());
         resultLv.setAdapter(adapter);
+        resultLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object obj = parent.getItemAtPosition(position);
+                if (obj instanceof SearchClubEntity) {
+                    SearchClubEntity clubEntity = (SearchClubEntity) obj;
+                    startActivity(ClubDetailActivity.createActivity(JoinClubActivity.this, clubEntity.getId()));
+                }
+            }
+        });
     }
 
     private void addListViewHead() {
@@ -107,19 +107,22 @@ public class JoinClubActivity extends BaseActivity {
     }
 
     private void requestSearch(String key) {
-        progressDialog.show();
+//        progressDialog.show();
         Map<String, Object> map = new HashMap<>();
         map.put("user_id", AppCommonInfo.userid);
         map.put("key", key);
         RequestBody body = JsonUtils.createJsonRequestBody(map);
-        Call<BaseResponseEntity<List<SearchClubEntity>>> call = retrofit.searchClub(body);
+        if (call != null) {
+            call.cancel();
+        }
+        call = retrofit.searchClub(body);
         call.enqueue(searchCallback);
     }
 
     private Callback<BaseResponseEntity<List<SearchClubEntity>>> searchCallback = new Callback<BaseResponseEntity<List<SearchClubEntity>>>() {
         @Override
         public void onResponse(Call<BaseResponseEntity<List<SearchClubEntity>>> call, Response<BaseResponseEntity<List<SearchClubEntity>>> response) {
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
             BaseResponseEntity<List<SearchClubEntity>> body = response.body();
             if (body != null && body.isSuccessed()) {
                 List<SearchClubEntity> data = body.getData();
@@ -137,7 +140,7 @@ public class JoinClubActivity extends BaseActivity {
 
         @Override
         public void onFailure(Call<BaseResponseEntity<List<SearchClubEntity>>> call, Throwable t) {
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
             ToastUtils.showLong(t.getMessage());
         }
     };

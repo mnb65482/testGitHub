@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.base;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.hcll.fishshrimpcrab.R;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -37,6 +39,9 @@ public abstract class BaseFragment extends Fragment {
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         group.addView(contentView, lp);
+
+        TextView title = topBar.setTitle("");
+        title.setTextColor(Color.WHITE);
 
         onInitView();
 
@@ -67,6 +72,11 @@ public abstract class BaseFragment extends Fragment {
         return topBar;
     }
 
+    /**
+     * 获取fragment布局控件
+     *
+     * @return
+     */
     protected View getFragView() {
         return contentView;
     }

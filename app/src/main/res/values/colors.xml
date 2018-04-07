@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#FF9800</color>
     <!-- common -->
     <color name="app_color_blue">#00A8E1</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
@@ -48,5 +52,9 @@
     <color name="black_33_33_36">#212124</color>
 
     <color name="comm_red">#ca2326</color>
+
+    <color name="close_red">#c04949</color>
+    <color name="club_message_agree">#dbb76c</color>
+    <color name="text_green">#63c35b</color>
 
 </resources>

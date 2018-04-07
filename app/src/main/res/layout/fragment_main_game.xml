@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/main_game_ll"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:orientation="horizontal" />
+
+    <!--android:layout_height="?android:attr/actionBarSize"-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/main_game_tl"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/black_33_33_36"
+        app:tabIndicatorColor="@color/common_text_color"
+        app:tabSelectedTextColor="@color/common_text_color"
+        app:tabTextColor="@color/qmui_config_color_75_white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_game_content_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

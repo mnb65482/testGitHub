@@ -15,6 +15,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.hcll.fishshrimpcrab.R;
 
 /**
+ * 加入俱乐部-输入验证信息弹出框
+ * <p>
  * Created by hong on 2018/3/3.
  */
 

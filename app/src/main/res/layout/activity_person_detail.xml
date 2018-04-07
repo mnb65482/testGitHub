@@ -17,10 +17,10 @@
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/person_detail_icon_iv"
             android:layout_width="48dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_margin="4dp"
             android:clickable="false"
-            android:src="@drawable/login_logo"
+            android:src="@drawable/default_head_ic"
             app:qmui_border_color="?attr/qmui_config_color_gray_6"
             app:qmui_border_width="1px"
             app:qmui_is_circle="true" />

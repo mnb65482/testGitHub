@@ -1,6 +1,7 @@
 package com.hcll.fishshrimpcrab.base;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -10,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.hcll.fishshrimpcrab.R;
+import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
@@ -48,6 +51,18 @@ public class BaseActivity extends AppCompatActivity {
             container.addView(view, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
         }
+
+        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
+        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
+        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_still, R.anim.slide_out_right);
+            }
+        });
+        TextView titleTV = topBar.setTitle("");
+        titleTV.setTextColor(Color.WHITE);
 
         topbarLayout.setVisibility(View.GONE);
     }

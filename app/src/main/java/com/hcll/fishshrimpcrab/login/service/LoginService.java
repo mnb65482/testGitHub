@@ -1,14 +1,18 @@
 package com.hcll.fishshrimpcrab.login.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.blankj.utilcode.util.TimeUtils;
 import com.google.protobuf.Any;
+import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.main.MainActivity;
 
@@ -54,6 +58,19 @@ public class LoginService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+//        Notification notification = new Notification();
+        Intent nfIntent = new Intent(this, MainActivity.class);
+        Notification notification = new Notification.Builder(this)
+                .setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0))
+                .setSmallIcon(R.drawable.login_logo)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.login_logo))
+                .setContentTitle("物2斗")
+                .setContentTitle("物2斗正在运行！")
+                .build();
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+        notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+        startForeground(1, notification);
     }
 
     @Override
@@ -71,12 +88,14 @@ public class LoginService extends Service {
             @Override
             public void run() {
                 initSocket();
-                GameLogin.LoginResReq loginResReq = GameLogin.LoginResReq.newBuilder().setKey(key).setUserId(userid).build();
-                Any any = Any.pack(loginResReq);
-                GameLogin.LoginBody body = GameLogin.LoginBody.newBuilder().setBody(any).build();
-                GameLogin.LoginHead head = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES).build();
-                GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(body).setHead(head).build();
-                sendmessage(loginMsg);
+//                GameLogin.LoginResReq loginResReq = GameLogin.LoginResReq.newBuilder().setKey(key).setUserId(userid).build();
+//                Any any = Any.pack(loginResReq);
+//                GameLogin.LoginBody body = GameLogin.LoginBody.newBuilder().setBody(any).build();
+//                GameLogin.LoginHead head = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES).build();
+//                GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(body).setHead(head).build();
+//                Log.w(TAG, "写入LoginResReq  key == " + key + "  userid = " + userid);
+//                sendmessage(loginMsg);
+                sendRes();
             }
         });
         return Service.START_REDELIVER_INTENT;
@@ -93,13 +112,15 @@ public class LoginService extends Service {
 
     public void initSocket() {
         Log.w(TAG, "准备链接...");
+        Log.w(TAG, "socket  --Ip = " + resIp + "  --port = " + resPort);
         try {
             socket = new Socket(resIp, resPort);
             Log.w(TAG, "链接成功.");
 
         } catch (Exception e) {
             Log.e(TAG, "链接出错.");
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+//            e.printStackTrace();
         }
     }
 
@@ -140,10 +161,10 @@ public class LoginService extends Service {
                 try {
                     if (sendTime != 0 && System.currentTimeMillis() - sendTime > AppCommonInfo.reconnectTime) {
                         Log.e(TAG, "心跳包挂了:重启中。 ");
-                        releaseSocket();
+//                        releaseSocket();
                         initSocket();
                         sendTime = 0;
-                        sendHear();
+                        sendRes();
                         break;
                     }
 
@@ -188,8 +209,15 @@ public class LoginService extends Service {
 //                        initSocket();
                     }
                 } catch (Exception e) {
+                    try {
+                        Thread.sleep(10 * 1000);
+                    } catch (InterruptedException e1) {
+                        //
+                    }
                     Log.e(TAG, "监听出错:" + e.toString());
-                    e.printStackTrace();
+                    initSocket();
+                    sendTime = 0;
+                    sendRes();
                 }
             }
         }
@@ -209,6 +237,20 @@ public class LoginService extends Service {
         GameLogin.LoginBody hearbody = GameLogin.LoginBody.newBuilder().setBody(any).build();
         GameLogin.LoginHead hearhead = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES_HEARTBEAT).build();
         GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(hearbody).setHead(hearhead).build();
+        sendmessage(loginMsg);
+    }
+
+
+    /**
+     * 发送res包
+     */
+    private void sendRes() {
+        GameLogin.LoginResReq loginResReq = GameLogin.LoginResReq.newBuilder().setKey(key).setUserId(userid).build();
+        Any any = Any.pack(loginResReq);
+        GameLogin.LoginBody body = GameLogin.LoginBody.newBuilder().setBody(any).build();
+        GameLogin.LoginHead head = GameLogin.LoginHead.newBuilder().setCmdId(GameLogin.LoginCmd.RES).build();
+        GameLogin.LoginMsg loginMsg = GameLogin.LoginMsg.newBuilder().setBody(body).setHead(head).build();
+        Log.w(TAG, "写入LoginResReq  key == " + key + "  userid = " + userid);
         sendmessage(loginMsg);
     }
 
@@ -232,6 +274,7 @@ public class LoginService extends Service {
     public void onDestroy() {
         _connect = false;
         releaseSocket();
+        stopForeground(true);
         super.onDestroy();
     }
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:background="#1a1a1a"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/item_cgame_head_iv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="4dp"
+        android:clickable="false"
+        android:src="@drawable/login_logo"
+        app:qmui_border_color="?attr/qmui_config_color_gray_6"
+        app:qmui_border_width="1px"
+        app:qmui_is_circle="true" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/item_cgame_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/qmui_config_color_white"
+            android:textSize="14sp"
+            tools:text="休闲娱乐" />
+
+        <LinearLayout
+            android:id="@+id/item_cgame_code_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/invitation_code"
+                android:textColor="@color/common_text_color"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/item_cgame_code_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/common_text_color"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_cgame_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/club_man_count_ic"
+                android:gravity="center_vertical"
+                android:textColor="@color/qmui_config_color_50_white"
+                android:textSize="11sp"
+                tools:text="20/100" />
+
+            <TextView
+                android:id="@+id/item_cgame_diamonds_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/game_list_chip"
+                android:gravity="center_vertical"
+                android:textColor="@color/qmui_config_color_50_white"
+                android:textSize="11sp"
+                tools:text="1/2" />
+
+            <TextView
+                android:id="@+id/item_cgame_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/game_time_ic"
+                android:gravity="center_vertical"
+                android:textColor="@color/qmui_config_color_50_white"
+                android:textSize="11sp"
+                tools:text="2小时30分" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="#1fffffff" />
+
+    <TextView
+        android:id="@+id/item_cgame_state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/game_playing"
+        android:padding="4dp"
+        android:textColor="#63c35b"
+        android:textSize="12sp"
+        tools:text="游戏中" />
+
+</LinearLayout>

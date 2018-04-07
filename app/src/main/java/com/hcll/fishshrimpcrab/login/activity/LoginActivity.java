@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -155,11 +154,11 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                     } else {
                         mhandler.sendEmptyMessage(head.getErrCode());
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     mhandler.sendEmptyMessage(3);
                     Log.e(TAG, "Socket: " + e.getMessage());
-                    releaseSocket();
-                    initSocket();
+//                    releaseSocket();
+//                    initSocket();
                 }
             }
         });

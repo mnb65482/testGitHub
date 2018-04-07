@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1a1a1a"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/club_message_icon_iv"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="4dp"
+                android:clickable="false"
+                android:src="@drawable/default_head_ic"
+                app:qmui_border_color="?attr/qmui_config_color_gray_6"
+                app:qmui_border_width="1px"
+                app:qmui_is_circle="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/club_message_name_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="14sp"
+                        tools:text="休闲娱乐" />
+
+                    <TextView
+                        android:id="@+id/club_message_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:textColor="@color/qmui_config_color_75_white"
+                        android:textSize="12sp"
+                        tools:text="今天18:00" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/club_message_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/qmui_config_color_75_white"
+                    android:textSize="12sp"
+                    tools:text="请求加入俱乐部:休闲竞技" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/club_handle_bottom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2e2e2e" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/club_handle_message_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:text="已处理"
+                    android:textColor="@color/club_message_agree"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/club_message_deal_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/club_handle_refuse_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/club_refuse_btn_bg"
+                        android:drawableLeft="@drawable/comm_close_white_ic"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/refuse"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/club_handle_agree_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/club_agree_btn_bg"
+                        android:drawableLeft="@drawable/comm_check_whith_ic"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/agree"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/club_message_delete_btn"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="#ff4a57"
+        android:text="@string/delete"
+        android:textColor="@android:color/white" />
+
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

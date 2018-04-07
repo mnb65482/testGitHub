@@ -10,7 +10,7 @@ import com.hcll.fishshrimpcrab.R;
 
 public enum MemberCommEnum {
     Creator(1, "创建者", R.color.app_color_blue),
-    //    CommMemberEnum(2, "", 0),
+    CommMemberEnum(2, "", R.color.common_text_color),
     Manager(4, "管理员", R.color.common_text_color);
 
     private int id;

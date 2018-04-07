@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -22,7 +21,6 @@ import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
-import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.util.HashMap;
@@ -83,16 +81,17 @@ public class ClubInfoEditActivity extends BaseActivity {
     private void initTopBar() {
         showTopBar();
         QMUITopBar topBar = getTopBar();
-        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
-        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
-        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        TextView titleTV = topBar.setTitle(title);
-        titleTV.setTextColor(Color.WHITE);
+        topBar.setTitle(title);
+//        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
+//        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
+//        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//        TextView titleTV = topBar.setTitle(title);
+//        titleTV.setTextColor(Color.WHITE);
         Button rightButton = topBar.addRightTextButton(getString(R.string.club_edit_save), View.generateViewId());
         rightButton.setTextColor(Color.WHITE);
         rightButton.setOnClickListener(new View.OnClickListener() {
@@ -157,11 +156,11 @@ public class ClubInfoEditActivity extends BaseActivity {
                 switch (response.body().getStatus()) {
                     case 0:
 //                        ClubInfoEditActivity.this.setResult(RESULT_OK);
-                        ClubInfoEditActivity.this.finish();
                         ToastUtils.showShort(R.string.club_update_Success);
+                        ClubInfoEditActivity.this.finish();
                         break;
                     case 1:
-                        ToastUtils.showShort(getString(R.string.club_update_Success) + response.body().getMsg());
+                        ToastUtils.showShort(getString(R.string.club_update_failuer) + response.body().getMsg());
                         break;
                     case 2:
                         ToastUtils.showShort(R.string.system_erro);
@@ -173,14 +172,14 @@ public class ClubInfoEditActivity extends BaseActivity {
                         break;
                 }
             } else {
-                ToastUtils.showShort(R.string.club_update_Success);
+                ToastUtils.showShort(R.string.club_update_failuer);
             }
         }
 
         @Override
         public void onFailure(Call<BaseResponseEntity> call, Throwable t) {
             mDialog.dismiss();
-            ToastUtils.showShort(getString(R.string.club_update_Success) + t.getMessage());
+            ToastUtils.showShort(getString(R.string.club_update_failuer) + t.getMessage());
         }
     };
 

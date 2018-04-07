@@ -3,8 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/club_pop_bg"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <TextView
@@ -14,6 +14,11 @@
         android:padding="8dp"
         android:text="@string/create_to_club"
         android:textColor="@color/qmui_config_color_white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" />
 
     <TextView
         android:id="@+id/club_popup_join_tv"

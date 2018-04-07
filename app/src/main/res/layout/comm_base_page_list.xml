@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/base_page_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/base_page_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/transparent"
+            android:dividerHeight="2dp"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+    <TextView
+        android:id="@+id/base_game_empty_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawableTop="@drawable/club_not_game"
+        android:gravity="center"
+        android:text="@string/no_allow_game"
+        android:textColor="@color/qmui_config_color_75_white"
+        android:textSize="12sp"
+        android:visibility="gone" />
+</RelativeLayout>

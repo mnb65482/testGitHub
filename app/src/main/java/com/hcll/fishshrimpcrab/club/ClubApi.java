@@ -1,8 +1,10 @@
 package com.hcll.fishshrimpcrab.club;
 
 import com.hcll.fishshrimpcrab.club.entity.ClubDetailEntity;
+import com.hcll.fishshrimpcrab.club.entity.ClubGameEntity;
 import com.hcll.fishshrimpcrab.club.entity.ClubInfoEntity;
 import com.hcll.fishshrimpcrab.club.entity.ClubMemberEntity;
+import com.hcll.fishshrimpcrab.club.entity.ClubMessageEntity;
 import com.hcll.fishshrimpcrab.club.entity.SearchClubEntity;
 import com.hcll.fishshrimpcrab.club.entity.UserInfoEntity;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
@@ -130,5 +132,85 @@ public interface ClubApi {
     @Headers("Content-Type:application/json")
     @POST("club/set-role")
     Call<BaseResponseEntity> setMemberRole(@Body RequestBody body);
+
+    /**
+     * 获取俱乐部成员列表
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/msg-list")
+    Call<BaseResponseEntity<ClubMessageEntity>> getMessageList(@Body RequestBody body);
+
+    /**
+     * 获取俱乐部游戏列表
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("imgroup/room-list")
+    Call<BaseResponseEntity<ClubGameEntity>> getGameList(@Body RequestBody body);
+
+    /**
+     * 设置消息免打扰
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/set-push")
+    Call<BaseResponseEntity> setPush(@Body RequestBody body);
+
+    /**
+     * 同意加入俱乐部
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/approve-join")
+    Call<BaseResponseEntity> agree(@Body RequestBody body);
+
+    /**
+     * 拒绝加入俱乐部
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/reject-join")
+    Call<BaseResponseEntity> reject(@Body RequestBody body);
+
+    /**
+     * 删除俱乐部消息
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/delete-msg")
+    Call<BaseResponseEntity> deleteMessage(@Body RequestBody body);
+
+    /**
+     * 升级俱乐部人数
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/update-limit")
+    Call<BaseResponseEntity> updateMax(@Body RequestBody body);
+
+    /**
+     * 俱乐部删除成员
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST("club/remove")
+    Call<BaseResponseEntity> deleteMember(@Body RequestBody body);
 
 }

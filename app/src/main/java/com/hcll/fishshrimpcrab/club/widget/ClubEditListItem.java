@@ -104,4 +104,8 @@ public class ClubEditListItem extends LinearLayout {
             return detailTv.getText().toString();
         }
     }
+
+    public TextView getDetailView() {
+        return detailTv;
+    }
 }

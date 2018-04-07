@@ -28,7 +28,7 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
 
     private static final String TAG = ImageSelectActivity.class.getSimpleName();
 
-    public static final int REQUEST_CODE_CAMERA = 101;
+    private static final int REQUEST_CODE_CAMERA = 101;
     public static final String EXTRA_CAMERA = "imagePath";
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
@@ -163,9 +163,9 @@ public class ImageSelectActivity extends BaseTransparentActivity implements Take
         CropOptions.Builder builder = new CropOptions.Builder();
 
         builder.setAspectX(AppCommonInfo.maxPixel).setAspectY(AppCommonInfo.maxPixel);
-//            builder.setOutputX(width).setOutputY(height);
+//        builder.setOutputX(AppCommonInfo.maxPixel).setOutputY(AppCommonInfo.maxPixel);
         //是否使用自带的图片裁剪工具
-        builder.setWithOwnCrop(true);
+        builder.setWithOwnCrop(false);
         return builder.create();
     }
 }

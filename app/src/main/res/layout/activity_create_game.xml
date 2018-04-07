@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:background="@color/qmui_config_color_gray_6">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="@string/room_name"
+                android:textColor="@color/qmui_config_color_white"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/create_game_room_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/login_fill_bg"
+                android:hint="@string/less_8_words"
+                android:inputType="number"
+                android:maxLength="8"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/qmui_config_color_75_white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="基础设置"
+                android:textColor="@color/qmui_config_color_white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/game_setting_bg"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/create_game_base_score_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp"
+                            tools:text="3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/base_score"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/create_game_bring_sorce_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp"
+                            tools:text="600" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bring_score"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.hcll.fishshrimpcrab.common.widget.bubbleseekbar.BubbleSeekBar
+                    android:id="@+id/create_game_sorce_bsb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:bsb_auto_adjust_section_mark="true"
+                    app:bsb_hide_bubble="true"
+                    app:bsb_max="12"
+                    app:bsb_second_track_color="#dbb76c"
+                    app:bsb_section_count="12"
+                    app:bsb_show_section_mark="false"
+                    app:bsb_touch_to_seek="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_fees"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/create_game_fees_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/comm_diamonds_ic"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="12sp"
+                            tools:text="1200" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/room_rate"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/create_game_room_rate_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/comm_diamonds_ic"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="12sp"
+                            tools:text="1200" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/game_duration"
+                    android:textColor="@color/qmui_config_color_white"
+                    android:textSize="12sp" />
+
+                <com.hcll.fishshrimpcrab.common.widget.bubbleseekbar.BubbleSeekBar
+                    android:id="@+id/create_game_duration_bsb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:bsb_auto_adjust_section_mark="true"
+                    app:bsb_hide_bubble="true"
+                    app:bsb_max="8"
+                    app:bsb_second_track_color="@color/common_text_color"
+                    app:bsb_section_count="8"
+                    app:bsb_section_text_position="below_section_mark"
+                    app:bsb_show_section_mark="true"
+                    app:bsb_show_section_text="true"
+                    app:bsb_show_thumb_text="true"
+                    app:bsb_touch_to_seek="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/people_num_settinf"
+                    android:textColor="@color/qmui_config_color_white"
+                    android:textSize="12sp" />
+
+                <com.hcll.fishshrimpcrab.common.widget.bubbleseekbar.BubbleSeekBar
+                    android:id="@+id/create_game_people_num_bsb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:bsb_auto_adjust_section_mark="true"
+                    app:bsb_hide_bubble="true"
+                    app:bsb_max="9"
+                    app:bsb_min="2"
+                    app:bsb_second_track_color="@color/common_text_color"
+                    app:bsb_section_count="7"
+                    app:bsb_section_text_position="below_section_mark"
+                    app:bsb_show_section_mark="true"
+                    app:bsb_show_section_text="true"
+                    app:bsb_show_thumb_text="true"
+                    app:bsb_touch_to_seek="true" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/advanced_setting"
+                android:textColor="@color/qmui_config_color_white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/game_setting_bg"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/authorize_input"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/authorize_input_info"
+                            android:textColor="@color/qmui_config_color_50_white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.zcw.togglebutton.CustomToggleButton
+                        android:id="@+id/create_game_authorize_input_ctb"
+                        android:layout_width="58dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        app:tbOffColor="#636363"
+                        app:tbOnColor="@color/common_text_color" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/eat_dice"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/eat_dice_info"
+                            android:textColor="@color/qmui_config_color_50_white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.zcw.togglebutton.CustomToggleButton
+                        android:id="@+id/create_game_eat_dice_ctb"
+                        android:layout_width="58dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        app:tbOffColor="#636363"
+                        app:tbOnColor="@color/common_text_color" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/move_chips"
+                            android:textColor="@color/qmui_config_color_white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/move_chips_info"
+                            android:textColor="@color/qmui_config_color_50_white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.zcw.togglebutton.CustomToggleButton
+                        android:id="@+id/create_game_move_chips_ctb"
+                        android:layout_width="58dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        app:tbOffColor="#636363"
+                        app:tbOnColor="@color/common_text_color" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/dealer_setting"
+                    android:textColor="@color/qmui_config_color_white"
+                    android:textSize="12sp" />
+
+                <RadioGroup
+                    android:id="@+id/create_game_dealer_rg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/create_game_grab_dealer_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_game_setting_rb_bg"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/grab_dealer"
+                        android:textColor="@color/game_setting_rb_text" />
+
+                    <RadioButton
+                        android:id="@+id/create_game_fixed_dealer_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_game_setting_rb_bg"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/fixed_dealer"
+                        android:textColor="@color/game_setting_rb_text" />
+
+                    <RadioButton
+                        android:id="@+id/create_game_turn_dealer_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_game_setting_rb_bg"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/turn_dealer"
+                        android:textColor="@color/game_setting_rb_text" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:textColor="@color/qmui_config_color_50_white"
+                    android:textSize="12sp"
+                    tools:text="@string/grap_dealer_score" />
+
+                <com.hcll.fishshrimpcrab.common.widget.bubbleseekbar.BubbleSeekBar
+                    android:id="@+id/create_game_dealer_bsb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:bsb_auto_adjust_section_mark="true"
+                    app:bsb_hide_bubble="true"
+                    app:bsb_second_track_color="@color/common_text_color"
+                    app:bsb_section_count="4"
+                    app:bsb_section_text_position="below_section_mark"
+                    app:bsb_show_section_mark="true"
+                    app:bsb_show_section_text="true"
+                    app:bsb_show_thumb_text="true"
+                    app:bsb_thumb_radius="6dp"
+                    app:bsb_touch_to_seek="true" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/club_create_sure_tv"
+            style="@style/common_commit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/begin_game" />
+
+    </LinearLayout>
+</ScrollView>

@@ -21,6 +21,8 @@ import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.base.BaseFragment;
 import com.hcll.fishshrimpcrab.club.ClubApi;
 import com.hcll.fishshrimpcrab.club.activity.ClubDetailActivity;
+import com.hcll.fishshrimpcrab.club.activity.ClubGameListActivity;
+import com.hcll.fishshrimpcrab.club.activity.ClubMessageActivity;
 import com.hcll.fishshrimpcrab.club.activity.CreateClubActivity;
 import com.hcll.fishshrimpcrab.club.activity.JoinClubActivity;
 import com.hcll.fishshrimpcrab.club.entity.ClubInfoEntity;
@@ -123,8 +125,6 @@ public class MainClubFragment extends BaseFragment implements View.OnClickListen
                 startActivityForResult(new Intent(getContext(), JoinClubActivity.class), REQUEST_CODE_CREATE);
             }
         });
-
-
     }
 
     /**
@@ -200,6 +200,14 @@ public class MainClubFragment extends BaseFragment implements View.OnClickListen
 
     private void initTopBar() {
         QMUITopBar topBar = getTopBar();
+        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
+        leftBackImageButton.setImageResource(R.drawable.comm_message_ic);
+        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ClubMessageActivity.class));
+            }
+        });
         topBarId = View.generateViewId();
         rightImageButton = topBar.addRightImageButton(R.drawable.main_add_club_ic, topBarId);
         rightImageButton.setOnClickListener(this);
@@ -234,7 +242,9 @@ public class MainClubFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
+        //由于先跳转到游戏列表，在跳转到详情列表，详情列表可对俱乐部信息进行编辑，需刷新。
+//        requestClubList();
+//        if (resultCode != Activity.RESULT_OK) return;
         if (requestCode == REQUEST_CODE_CREATE) {
             requestClubList();
         }
@@ -243,6 +253,7 @@ public class MainClubFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void clickItem(ClubInfoEntity.ListBean listBean) {
-        startActivityForResult(ClubDetailActivity.createActivity(getContext(), listBean.getId()), REQUEST_CODE_CREATE);
+//        startActivityForResult(ClubDetailActivity.createActivity(getContext(), listBean.getId()), REQUEST_CODE_CREATE);
+        startActivityForResult(ClubGameListActivity.createActivity(getContext(), listBean.getId(), listBean.getName()), REQUEST_CODE_CREATE);
     }
 }

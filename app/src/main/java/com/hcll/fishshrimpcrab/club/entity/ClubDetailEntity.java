@@ -1,5 +1,7 @@
 package com.hcll.fishshrimpcrab.club.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by hong on 2018/3/4.
  */
@@ -37,6 +39,9 @@ public class ClubDetailEntity {
     private String name;
     private String header;
     private String desc;
+    @SerializedName("switch")
+    private int switchs;
+    private int pushStatus;
 
     public int getOnlineCount() {
         return onlineCount;
@@ -148,5 +153,21 @@ public class ClubDetailEntity {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public int getSwitchs() {
+        return switchs;
+    }
+
+    public void setSwitchs(int switchs) {
+        this.switchs = switchs;
+    }
+
+    public int getPushStatus() {
+        return pushStatus;
+    }
+
+    public void setPushStatus(int pushStatus) {
+        this.pushStatus = pushStatus;
     }
 }

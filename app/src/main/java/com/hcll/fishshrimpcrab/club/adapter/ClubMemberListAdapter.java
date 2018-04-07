@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.hcll.fishshrimpcrab.R;
@@ -12,6 +13,7 @@ import com.hcll.fishshrimpcrab.club.entity.ClubMemberEntity;
 import com.hcll.fishshrimpcrab.club.enums.MemberCommEnum;
 import com.hcll.fishshrimpcrab.club.enums.MemberEditEnum;
 import com.hcll.fishshrimpcrab.common.utils.HttpFileUtils;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class ClubMemberListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private boolean isEdit;
+    private boolean isCreate;
 
     public ClubMemberListAdapter(Context context, List<ClubMemberEntity> list) {
         this.context = context;
@@ -58,6 +61,8 @@ public class ClubMemberListAdapter extends BaseAdapter {
             viewHolder.iconIv = convertView.findViewById(R.id.club_member_icon_iv);
             viewHolder.nameTv = convertView.findViewById(R.id.club_member_name_tv);
             viewHolder.powerTv = convertView.findViewById(R.id.club_member_power_tv);
+            viewHolder.deleteBtn = convertView.findViewById(R.id.club_member_delete_btn);
+            viewHolder.fillview = convertView.findViewById(R.id.club_member_fill_view);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
@@ -84,14 +89,47 @@ public class ClubMemberListAdapter extends BaseAdapter {
             viewHolder.powerTv.setTextColor(context.getResources().getColor(MemberCommEnum
                     .getColorById(entity.getType())));
         }
+
         viewHolder.powerTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isEdit && position != 0) {
-                    onManagerClickListener.manage(entity.getUid(), entity.getType(), MemberEditEnum.getControlCodeById(entity.getType()));
+                    onManagerClickListener.manage(entity.getUid(), MemberEditEnum.getChangeTypeById(entity.getType()), MemberEditEnum.getControlCodeById(entity.getType()));
                 }
             }
         });
+
+        //创建者不能够被删除
+        if (position == 0) {
+            ((SwipeMenuLayout) convertView).setSwipeEnable(false);
+        } else {
+            //创建者进成员列表有删除角色的功能
+            if (isCreate) {
+                ((SwipeMenuLayout) convertView).setSwipeEnable(true);
+            } else {
+                ((SwipeMenuLayout) convertView).setSwipeEnable(false);
+            }
+        }
+
+        if (position == 1) {
+            viewHolder.fillview.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.fillview.setVisibility(View.GONE);
+        }
+
+
+        final View finalConvertView = convertView;
+        viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteListener != null) {
+                    ((SwipeMenuLayout) finalConvertView).quickClose();
+                    onDeleteListener.delete(entity);
+                }
+            }
+        });
+
+
         return convertView;
     }
 
@@ -100,6 +138,8 @@ public class ClubMemberListAdapter extends BaseAdapter {
         QMUIRadiusImageView iconIv;
         TextView nameTv;
         TextView powerTv;
+        Button deleteBtn;
+        View fillview;
 
     }
 
@@ -122,9 +162,23 @@ public class ClubMemberListAdapter extends BaseAdapter {
         this.onManagerClickListener = onManagerClickListener;
     }
 
+    public interface OnDeleteListener {
+        void delete(ClubMemberEntity entity);
+    }
+
+    private OnDeleteListener onDeleteListener;
+
+    public void setOnDeleteListener(OnDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
+    }
+
     public void addAll(List<ClubMemberEntity> list) {
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public void setCreate(boolean create) {
+        isCreate = create;
     }
 }

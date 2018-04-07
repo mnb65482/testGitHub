@@ -46,7 +46,32 @@ public class AppCommonInfo {
      */
     public static int reconnectTime = 20 * 1000;
 
+    /**
+     * 俱乐部创建费用
+     */
     public static String clubCreateFee = "500";
+
+    /**
+     * 俱乐部升级 人数单位(每次增加50人)
+     */
+    public static int clubUpdateCount = 50;
+
+    /**
+     * 俱乐部升级 每次费用
+     */
+    public static int clubUpdateFee = 50 * 50;
+
+    /**
+     * 俱乐部最大上限人数
+     */
+    public static int clubMaxCount = 500;
+
+    /**
+     * 分页 每页最大条数
+     */
+    public static int pageSize = 20;
+
+
     //-------------配置相关
 
     //-----------------用户信息相关

@@ -3,10 +3,8 @@ package com.hcll.fishshrimpcrab.club.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +12,14 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hcll.fishshrimpcrab.R;
 import com.hcll.fishshrimpcrab.base.BaseActivity;
 import com.hcll.fishshrimpcrab.club.ClubApi;
-import com.hcll.fishshrimpcrab.club.enums.GenderEnum;
 import com.hcll.fishshrimpcrab.club.entity.UserInfoEntity;
+import com.hcll.fishshrimpcrab.club.enums.GenderEnum;
 import com.hcll.fishshrimpcrab.common.http.HttpUtils;
 import com.hcll.fishshrimpcrab.common.http.entity.BaseResponseEntity;
 import com.hcll.fishshrimpcrab.common.utils.DialogUtils;
 import com.hcll.fishshrimpcrab.common.utils.HttpFileUtils;
 import com.hcll.fishshrimpcrab.common.utils.JsonUtils;
-import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,17 +98,7 @@ public class PersonDetailActivity extends BaseActivity {
 
     private void initTopBar() {
         showTopBar();
-        QMUITopBar topBar = getTopBar();
-        QMUIAlphaImageButton leftBackImageButton = topBar.addLeftBackImageButton();
-        leftBackImageButton.setImageResource(R.drawable.topbar_back_btn);
-        leftBackImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        TextView titleTV = topBar.setTitle(R.string.title_person_detail);
-        titleTV.setTextColor(Color.WHITE);
+        getTopBar().setTitle(getString(R.string.title_person_detail));
     }
 
     private void initParam() {

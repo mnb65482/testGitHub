@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2b2b2b"
+    android:orientation="vertical">
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_type_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/type" />
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_model_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/model" />
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_bscore_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/base_score" />
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_banker_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/banker_count" />
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_people_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/people_count" />
+
+    <com.hcll.fishshrimpcrab.club.widget.ClubGameFilterView
+        android:id="@+id/game_filter_seat_cgfv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:game_filter_title="@string/seat"
+        app:game_max_item="2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/qmui_config_color_black" />
+
+    <TextView
+        android:id="@+id/game_filter_ok_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/ok"
+        android:textColor="@color/common_text_color" />
+
+
+</LinearLayout>

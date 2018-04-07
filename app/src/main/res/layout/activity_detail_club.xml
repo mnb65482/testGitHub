@@ -36,8 +36,8 @@
 
                     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                         android:id="@+id/club_detail_head_iv"
-                        android:layout_width="78dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_margin="4dp"
                         android:clickable="false"
                         android:src="@drawable/club_empty_info"
@@ -87,6 +87,14 @@
                 android:layout_height="wrap_content"
                 app:cel_name="@string/into_not_disturb"
                 app:cel_shownext="false" />
+
+            <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
+                android:id="@+id/club_detail_update_celi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cel_name="@string/update_max_people"
+                app:cel_shownext="true" />
 
             <com.hcll.fishshrimpcrab.club.widget.ClubEditListItem
                 android:id="@+id/club_detail_region_celi"

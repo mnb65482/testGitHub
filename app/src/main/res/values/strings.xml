@@ -9,6 +9,7 @@
     <string name="manager">管理</string>
     <string name="success">操作成功</string>
     <string name="failuer">操作失败</string>
+    <string name="delete">删除</string>
     <string name="search_fauiler">查询失败！</string>
     <string name="system_erro">系统异常！</string>
 
@@ -72,6 +73,7 @@
     <string name="tab_main">首页</string>
 
     <!--俱乐部-->
+    <string name="titlle_club_message">俱乐部消息</string>
     <string name="club_empty_text1">你还没有加入俱乐部哦~</string>
     <string name="club_empty_text2">自己创建或者加入一个吧！</string>
     <string name="my_club">我的俱乐部</string>
@@ -117,6 +119,53 @@
     <string name="exit_club">退出俱乐部</string>
     <string name="sure_dismiss_club">确定要解散俱乐部？</string>
     <string name="dismiss_club">解散俱乐部</string>
+    <string name="refuse">拒绝</string>
+    <string name="agree">同意</string>
+    <string name="club_game_list">游戏列表</string>
+    <string name="game_filter">筛选</string>
+    <string name="invitation_code">邀请码：</string>
+    <string name="invitation_code2">邀请码</string>
+    <string name="club_game_palying">游戏中</string>
+    <string name="club_game_waiting">等待中</string>
+    <string name="not_game">没有游戏</string>
+    <string name="type">类型</string>
+    <string name="model">模式</string>
+    <string name="base_score">底分</string>
+    <string name="banker_count">庄位</string>
+    <string name="people_count">人数</string>
+    <string name="seat">座位</string>
+    <string name="main_invitation_code_prompt">输入验证码,和朋友一起切磋</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_failuer">删除失败</string>
+    <string name="update_max_people">升级上限人数</string>
+    <string name="update_max_success">升级上限人数成功</string>
+    <string name="update_max_failuer">只有创建者可以升级战队人数上限</string>
+    <string name="update_max_request_erro">请求参数错误(钻石和升级人数不对应)</string>
+    <string name="update_max_not_idou">钻石不足！</string>
+    <string name="update_max_too_much">战队人数上限已经达到了最大值1000</string>
+    <string name="no_allow_game">没有符合条件的牌局</string>
+
+    <!--牌局-->
+    <string name="begin_game">现在开局</string>
+    <string name="bring_score">带入积分</string>
+    <string name="room_name">房间名称</string>
+    <string name="less_8_words">少于8字符</string>
+    <string name="str_fees">手续费:</string>
+    <string name="room_rate">房费:</string>
+    <string name="game_duration">牌局时长</string>
+    <string name="people_num_settinf">人数设置</string>
+    <string name="advanced_setting">高级设置</string>
+    <string name="authorize_input">授权带入</string>
+    <string name="authorize_input_info">需房主同意进场</string>
+    <string name="eat_dice">吃骰模式</string>
+    <string name="eat_dice_info">可抢押不出</string>
+    <string name="move_chips">挪注模式</string>
+    <string name="move_chips_info">可抢挪注</string>
+    <string name="dealer_setting">庄设置</string>
+    <string name="grab_dealer">抢庄</string>
+    <string name="fixed_dealer">固定庄位</string>
+    <string name="turn_dealer">轮庄</string>
+    <string name="grap_dealer_score">抢庄积分</string>
 
 
 </resources>

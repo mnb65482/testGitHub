@@ -3,7 +3,6 @@ package com.hcll.fishshrimpcrab.common.http;
 import android.content.Context;
 import android.util.Log;
 
-import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.hcll.fishshrimpcrab.common.AppCommonInfo;
 import com.hcll.fishshrimpcrab.common.Constant;
@@ -89,7 +88,7 @@ public class HttpUtils {
      */
     public static OkHttpClient.Builder createProjectClientBuilder(Context context) {
 //        return createClientBuilder(context, 0, false, "");
-        OkHttpClient.Builder clientBuilder = createClientBuilder(context, 0, false, "");
+        OkHttpClient.Builder clientBuilder = createClientBuilder(context, 30, false, "");
         HttpRequestHeaderInterceptor headerInterceptor = new HttpRequestHeaderInterceptor();
         headerInterceptor.addHeader("md5at", AppCommonInfo.getToken());
         headerInterceptor.addHeader("did", Constant.IMEI);
@@ -98,7 +97,7 @@ public class HttpUtils {
     }
 
     public static OkHttpClient.Builder createProjectClientBuilder(Context context, String token) {
-        OkHttpClient.Builder clientBuilder = createClientBuilder(context, 0, false, "");
+        OkHttpClient.Builder clientBuilder = createClientBuilder(context, 30, false, "");
         HttpRequestHeaderInterceptor headerInterceptor = new HttpRequestHeaderInterceptor();
         headerInterceptor.addHeader("md5at", token);
         headerInterceptor.addHeader("did", token);
@@ -125,11 +124,11 @@ public class HttpUtils {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         if (timeout > 0) {
             // 设置请求超时
-            clientBuilder.connectTimeout(20, TimeUnit.SECONDS);
+            clientBuilder.connectTimeout(timeout, TimeUnit.SECONDS);
             // 设置响应超时
-            clientBuilder.readTimeout(10, TimeUnit.SECONDS);
-            clientBuilder.writeTimeout(20, TimeUnit.SECONDS);
-            Log.d(TAG, "登录超时时间:" + String.valueOf(20));
+            clientBuilder.readTimeout(timeout, TimeUnit.SECONDS);
+            clientBuilder.writeTimeout(timeout, TimeUnit.SECONDS);
+            Log.d(TAG, "登录超时时间:" + String.valueOf(timeout));
         }
         if (sslFake) {
             clientBuilder.sslSocketFactory(HttpSSLContext.getFakeSocketFactory());
