@@ -1,0 +1,335 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package GameYXXProto;
+
+enum YXX_Cmd {
+    NULL                = 0;
+    Game_HeartBeat      = 666;    //游戏心跳
+    Join_Room_Req       = 1001;   //进入房间请求
+    Start_Room_Req      = 1002;   //房间开始请求
+    Stop_Room_Req       = 1003;   //房间暂停请求
+    Seat_Down_Req       = 1004;   //坐下或站起、离开请求
+    Settle_Req          = 1005;   //结算请求
+    Other_Seat_Ntf      = 1006;   //别人坐下通知
+    Keep_Seat_Req       = 1007;   //留座请求
+    Buy_In_Req          = 1008;   //带入请求
+    Round_Start_Ntf     = 1009;   //每手开始通知
+    Fight_Banker_Req    = 1010;   //抢庄请求
+    Bet_Req             = 1011;   //下注请求
+    Banker_Round_Ntf    = 1012;   //庄家轮通知
+    Banker_Action_Req   = 1013;   //庄家操作请求
+    Round_Finish_Ntf    = 1014;   //每手结束通知
+    Fight_Time_Ntf      = 1015;   //抢吃骰或挪注的通知
+    Fight_Bet_Req       = 1016;   //抢吃骰或挪注请求
+    Extra_Bet_Req       = 1017;   //吃骰或挪注请求
+    Dismiss_Req         = 1018;   //解散房间请求
+    Game_End_Ntf        = 1019;   //房间结束通知
+    Game_RealTime       = 1020;   //实时战况
+    Game_Review         = 1021;   //上局回顾
+    Game_LastTen        = 1022;   //前十回顾
+}
+
+enum YXX_BetType {
+    BET_NULL     = 0;
+    BET_FISH     = 1;   //鱼
+    BET_SHRIMP   = 2;   //虾
+    BET_CRAB     = 3;   //蟹
+    BET_CALABASH = 4;   //葫芦
+    BET_COIN     = 5;   //铜钱
+    BET_CHOOK    = 6;   //鸡
+}
+
+message YXX_Head {
+  int32 userId = 1;
+  int32 room_id = 2;
+  int32 room_path = 3;
+  int32 err_code = 4;
+  YXX_Cmd cmd_id = 5;
+}
+
+message YXX_Msg {
+  YXX_Head head = 1;
+  google.protobuf.Any body = 2;
+}
+
+// 进入房间请求
+message YXX_JoinRoomReq {
+
+}
+
+// 进入房间回包
+message YXX_JoinRoomRes {
+    //errorCode = 进入房间  0 成功   1 失败   2 房间已经解散  3 房间人数已满
+    int32 gameStatus = 1;//游戏状态  0 倒计时  1 游戏中  2 等待开局   3 其他
+    int32 baseScore = 2;//底分
+    int32 bankerIndex = 3;//庄位下标
+    int32 gameProcess = 4;//游戏进度 -1 未开始 0 下注中  1 庄家操作中  2 抢庄中  3 抢'挪注'或抢'吃骰'中  4 '挪注'或'吃骰'操作中
+    int32 countDown = 5;//倒计时（即5中不同阶段的倒计时剩余时间）
+    int32 mySeatID = 6;//我的座位下标
+    repeated int32 dice = 7;//已经摇出的骰子
+    repeated int32 playerId = 8;//玩家ID
+    repeated int32 playerSeatId = 9;//玩家座位
+    repeated int32 playerScore = 10;//玩家剩余积分
+    repeated string playerHead = 11;//玩家头像
+    repeated string playerNick = 12;//玩家昵称
+    repeated int32 diceBetScore = 13;//六个骰子分别下注额，顺序：鱼、虾、蟹、葫芦、铜钱、鸡
+    int32 roomOwner = 14;//房主 0 不是  1 是
+    int32 bControl = 15;//房间是否控制带入 0 不是 1是
+    int32 buyInTime = 16;//带入等待剩余时间
+    repeated int32 canPlayStatus = 17;//玩家是否能进行操作 0 不可以   1 可以（刚坐下未加入当前轮等不能操作）
+    int32 bankerMinScore = 18;//坐庄需要最小筹码
+    int32 keptTime = 19;//留座的倒计时 默认0为未留座（只显示自己）
+    repeated int32 holdingSeatLeftTimeArray = 20;  //占座等待状态：占座但未申请带入，返回-1，APP端显示“等待”；占座并申请带入中，返回等待剩余倒计时，如10
+    int32 extraBetIndex = 21;//正在操作吃或者挪的玩家的下标
+    int32 bSettle = 22;//提前离桌 0 否   1 是
+    int32 bankerId = 23;//庄家用户ID
+    int32 maxBetNum = 24;//最多下注额度（通过计算庄家积分得出）
+    int32 bManager = 25;//是否有管理权限（踢出或站起等）
+}
+
+// 房间开始请求
+message YXX_StartRoomReq {
+
+}
+
+// 房间开始回包
+message YXX_StartRoomRes {
+
+}
+
+// 房间暂停请求
+message YXX_StopRoomReq {
+    int32 bPause = 1; // 0：继续 1：暂停
+}
+
+// 房间暂停回包
+message YXX_StopRoomRes {
+    int32 pauseStatus = 1;// 0 继续   1 暂停    2 失败
+    int32 remainingTime = 2;//暂停剩余时间（秒）
+}
+
+// 自己坐下或站起请求
+message YXX_SeatDownReq {
+    int32 seatId = 1;
+    int32 action = 2;// 1 坐下    2 站起
+}
+
+// 自己坐下回包
+message YXX_SeatDownRes {
+    //errorCode = 0 成功     1 在别的房间留座（坐下失败）     2 已经结算（坐下失败）  3 座位被他人坐下
+    int32 action = 1;//1 坐下     2 站起    3 被踢    4 结算站起
+    int32 seatId = 2;
+    int32 score = 3;//我的积分，坐下时为0则要带入
+}
+
+// 申请结算请求
+message YXX_SettleReq {
+    int32 seatId = 1;//座位号
+}
+
+// 申请结算回包
+message YXX_SettleRes {
+    //errorCode = 0 成功  1 失败
+}
+
+// 别人坐下通知
+message YXX_OtherSeatNtf {
+    int32 userId = 1;//别人的id，不放在header
+    int32 seatId = 2;
+    int32 score = 3;
+    string portrait = 4;//头像
+    string nick = 5;//昵称
+    int32 action = 6;//1坐下 2站起
+}
+
+// 留座回包
+message YXX_KeepSeatRes {
+    //errorCode = 0 成功      1 失败
+    int32 leftTime = 1;//留座剩余时间
+}
+
+// 购买积分请求
+message YXX_BuyReq {
+    int32 score = 1;
+}
+
+// 购买积分回包
+message YXX_BuyRes {
+    //errorCode = 0 成功  1 等待房主确认    2 房主拒绝  3 游戏即将结束（不能带入）
+    int32 playerId = 1;
+    int32 roomScore = 2;//玩家剩余积分
+    int32 playerDiamonds = 3;//玩家剩余钻石
+    int32 leftSecs = 4;//等待房主确认剩余时间
+}
+
+// 每手开始通知
+message YXX_RoundsStartNtf {
+    int32 bankerId = 1;//-1 为抢庄（即未定庄家）
+    int32 maxBetNum = 2;//最多下注额度（通过计算庄家积分得出）
+    repeated int32 canPlayStatus = 3;//玩家是否能进行操作 0 不可以   1 可以（刚坐下未加入当前轮等不能操作）
+    repeated int32 playerScore = 4;//玩家剩余积分
+    int32 bankerMinScore = 5;//坐庄需要最小筹码（抢庄不足则不能抢、轮庄不足则换庄、固庄不足则弹带入）
+    int32 bankerIndex = 6;//庄家下标
+}
+
+// 抢庄请求
+message YXX_FightBankerReq {
+
+}
+
+// 抢庄回包
+message YXX_FightBankerRes {
+    //errorCode = 0 成功  1 被他人抢庄   2 无人抢系统分配庄
+    int32 bankerId = 1;//庄家用户ID
+    int32 maxBetNum = 2;//最多下注额度（通过计算庄家积分得出）
+    int32 bankerIndex = 3;//庄家座位
+}
+
+// 投注请求
+message YXX_BetReq {
+    YXX_BetType bet_type = 1; // 押注的类型：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+    int32 bet_score = 2; // 押注的分数
+}
+
+// 投注回包
+message YXX_BetRes {
+    //errorCode 0 成功    1 失败
+    YXX_BetType bet_type = 1; // 押注的类型：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+    int32 bet_score = 2; // 押注的分数
+    int32 maxBetNum = 3;// 剩余最多下注额度（通过计算庄家积分减去已经下注积分得出）
+    int32 left_score = 4; // 剩余的分数
+}
+
+// 庄家轮通知
+message YXX_BankerRoundNtf {
+    repeated int32 bet_score = 1;// 不同类型上面的押注积分，顺序：鱼、虾、蟹、葫芦、铜钱、鸡
+    repeated int32 playerScore = 2;//玩家剩余积分
+}
+
+// 庄家操作请求
+message YXX_BankerActionReq {
+
+}
+
+// 庄家操作回包
+message YXX_BankerActionRes {
+    repeated int32 dice = 1;// 庄家扔出的骰子：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+}
+
+// 每手结算通知
+message YXX_RoundFinishNtf {
+    repeated sint32 score = 1;//发积分增加 0 则玩家未参与该手或者输（庄家输要发负数）
+}
+
+// 抢吃骰或抢挪注通知
+message YXX_TimeToFightNtf {
+    int32 mode = 1;// 1 抢吃骰    2 抢挪注
+    repeated int32 bet_score = 2;// 不同类型上面的押注积分，顺序：鱼、虾、蟹、葫芦、铜钱、鸡
+}
+
+// 抢吃骰或抢挪注请求
+message YXX_FightBetReq {
+    int32 mode = 1;// 1 抢吃骰    2 抢挪注
+}
+
+// 抢吃骰或抢挪注回包
+message YXX_FightBetRes {
+    //errorCode = 0 成功  1 被他人抢   2 无人抢跳过
+    int32 bet_id = 1;//抢到的用户ID
+}
+
+// 吃骰或挪注请求
+message YXX_ExtraBetReq {
+    YXX_BetType bet_type = 1; // 押注的类型：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+    int32 bet_mode = 2; // 1 吃骰    2 挪注
+}
+
+// 吃骰或挪注回包
+message YXX_ExtraBetRes {
+    //errorCode 0 成功    1 失败
+    YXX_BetType bet_type = 1; // 押注的类型：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+    int32 bet_mode = 2; // 1 吃骰    2 挪注
+}
+
+// 房间解散请求
+message YXX_DismissReq {
+    
+}
+
+// 房间解散回包
+message YXX_DismissRes {
+    //通知所有玩家，本手结束解散
+}
+
+// 房间结束通知
+message YXX_GameEndNtf {
+    //errorCode = 0 成功  1 失败
+    repeated string topThreeNick = 1;//土豪、MVP、大鱼
+    repeated string topThreePortrait = 2;//土豪、MVP、大鱼
+    repeated int32 userId = 3;//所有玩家ID
+    repeated int32 bringIn = 4;//所有玩家带入
+    repeated int32 score = 5;//所有玩家剩余积分
+    repeated string nick = 6;//所有玩家昵称
+    int32 fightScore = 7;//抢庄积分
+    int32 duration = 8;//牌局时长 秒
+    int32 totalHand = 9;//总手数
+    int32 maxPot = 10;//最大分池（即所有人下注最多的那一手的下注总数）
+    int32 totalBuyIn = 11;//总带入
+}
+
+// 实时战况请求
+message YXX_RealTimeReq {
+
+}
+
+// 实时战况回包
+message YXX_RealTimeRes {
+    int32 gameLeftTime = 1;//游戏剩余时间
+    int32 fightBankerFee = 2;//抢庄积分
+    repeated string userName = 3; //玩家昵称
+    repeated int32 buyIn = 4;     //玩家带入
+    repeated int32 profit = 5;    //玩家剩余积分
+    repeated int32 status = 6;    //玩家状态 1 在玩   2 不在玩   3 已经结算
+    repeated int32 userId = 7;    //玩家id
+    repeated string audienceName = 8;//观众昵称
+    repeated string audienceHead = 9;//观众头像
+    repeated int32 audienceId = 10;//观众id
+}
+
+// 上局回顾请求
+message YXX_ReviewReq {
+
+}
+
+// 上局回顾回包
+message YXX_ReviewRes {
+    repeated string userName = 1;    //玩家昵称
+    repeated string portrait = 2;    //玩家头像
+    repeated int32 profit = 3;       //玩家盈亏积分
+    repeated int32 bet_fish = 4;     //玩家押鱼的积分
+    repeated int32 bet_shrimp = 5;   //玩家押虾的积分
+    repeated int32 bet_crab = 6;     //玩家押蟹的积分
+    repeated int32 bet_calabash = 7; //玩家押葫芦的积分
+    repeated int32 bet_coin = 8;     //玩家押铜钱的积分
+    repeated int32 bet_chook = 9;    //玩家押鸡的积分
+    int32 bet_mode = 10;             //1 吃骰    2 挪注    0 标准模式
+    int32 bet_index = 11;            //吃或者挪的玩家下标，没有则-1
+    YXX_BetType bet_type = 12;       //吃或者挪的类型：1鱼、2虾、3蟹、4葫芦、5铜钱、6鸡
+    repeated int32 score_before = 13;//下注前积分
+    int32 bankerIndex = 14;          //庄家下标
+    repeated int32 result_dice = 15; //摇出的三个骰子
+}
+
+// 前十回顾请求
+message YXX_LastTenReq {
+
+}
+
+// 前十回顾回包
+message YXX_LastTenRes {
+    repeated int32 firstDice = 1;   //第一个骰子
+    repeated int32 secondDice = 2;  //第二个骰子
+    repeated int32 thirdDice = 3;   //第三个骰子
+}
